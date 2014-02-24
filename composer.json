@@ -1,0 +1,20 @@
+{
+    "name": "star/phpkata",
+    "description": "Programming Kata for PHP",
+    "autoload": {
+        "psr-0": {
+            "": ["lib", "tests"]
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/yaml": "2.2.x-dev"
+    },
+    "require-dev": {
+        "behat/behat": "2.4.*@stable",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
