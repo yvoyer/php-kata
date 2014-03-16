@@ -9,6 +9,7 @@ namespace {
         Behat\Gherkin\Node\TableNode;
     use org\bovigo\vfs\vfsStream;
     use Star\Kata\Configuration\Configuration;
+    use Star\Kata\Configuration\YamlLoader;
     use Star\Kata\KataApplication;
     use Star\Kata\Model\Kata;
     use Symfony\Component\Console\Tester\ApplicationTester;
@@ -36,40 +37,15 @@ namespace {
          */
         public function __construct(array $parameters)
         {
-            vfsStream::setup('src');
+            $root = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'feature-config.yml';
+            $yamlLoader = new YamlLoader($root);
 
-            $testConfig = new Configuration();
-            $testConfig->setSrcPath(vfsStream::url('src'));
+            $testConfig = $yamlLoader->load();
+            $testConfig->setSrcPath($root);
 
             $this->application = new KataApplication($testConfig);
             $this->application->setAutoExit(false);
         }
-//
-//        /**
-//         * @return string
-//         */
-//        private function getRootPath()
-//        {
-//            return dirname(__DIR__) . DIRECTORY_SEPARATOR;
-//        }
-//
-//        /**
-//         * @param string $filename
-//         *
-//         * @return string
-//         */
-//        private function getKataPath($filename = null)
-//        {
-//            return $this->getRootPath() . 'data' . DIRECTORY_SEPARATOR . $filename;
-//        }
-//
-//        /**
-//         * @return string
-//         */
-//        private function getSrcPath()
-//        {
-//            return $this->getRootPath() . 'src' . DIRECTORY_SEPARATOR;
-//        }
 
         /**
          * @Given /^I have the \'([^\']*)\' configuration$/
