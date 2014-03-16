@@ -7,7 +7,9 @@
 
 namespace Star\Kata\Model;
 
+use Star\Component\Collection\TypedCollection;
 use Star\Kata\Exception\MissingConfigurationException;
+use Star\Kata\Model\Step\Step;
 
 /**
  * Class Kata
@@ -18,10 +20,23 @@ use Star\Kata\Exception\MissingConfigurationException;
  */
 class Kata
 {
+    const CLASS_NAME = __CLASS__;
+
     /**
-     * @var Step[]
+     * @var Step[]|TypedCollection
      */
-    private $steps = array();
+    private $steps;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+        $this->steps = new TypedCollection(Step::INTERFACE_NAME);
+    }
 
     /**
      * @return bool
@@ -34,15 +49,25 @@ class Kata
         }
 
         foreach ($this->steps as $step) {
-            $step->setup();
+            $step->init();
         }
 
         return true;
     }
 
+    /**
+     * @param Step $step
+     */
     public function addStep(Step $step)
     {
-        $this->steps[] = $step;
+        $this->steps->add($step);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
- 

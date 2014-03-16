@@ -1,0 +1,3 @@
+suites:
+    phpkata:
+        src_path: lib

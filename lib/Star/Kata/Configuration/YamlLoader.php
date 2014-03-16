@@ -19,14 +19,31 @@ use Symfony\Component\Yaml\Yaml;
 class YamlLoader
 {
     /**
-     * @param string $yaml
-     *
+     * @var string
+     */
+    private $path;
+
+    /**
+     * @param string $path
+     */
+    public function __construct($path)
+    {
+        $this->path = $path;
+    }
+
+    /**
      * @return Configuration
      */
-    public function load($yaml)
+    public function load()
     {
-        $config = Yaml::parse($yaml);
-        return new Configuration($config['name'], $config['src-path']);
+        $config = Yaml::parse($this->path);
+        $configuration = new Configuration();
+
+        $configuration->setSrcPath($config['src-path']);
+        foreach ($config['katas'] as $kataName => $kata) {
+            $configuration->addKata($kataName);
+        }
+
+        return $configuration;
     }
 }
- 

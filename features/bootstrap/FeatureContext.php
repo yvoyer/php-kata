@@ -7,12 +7,11 @@ namespace {
         Behat\Behat\Exception\PendingException;
     use Behat\Gherkin\Node\PyStringNode,
         Behat\Gherkin\Node\TableNode;
-    use features\bootstrap\TestCommand;
+    use org\bovigo\vfs\vfsStream;
+    use Star\Kata\Configuration\Configuration;
     use Star\Kata\KataApplication;
+    use Star\Kata\Model\Kata;
     use Symfony\Component\Console\Tester\ApplicationTester;
-
-    require_once 'PHPUnit/Autoload.php';
-    require_once 'PHPUnit/Framework/Assert/Functions.php';
 
     /**
      * Features context.
@@ -25,6 +24,11 @@ namespace {
         private $application;
 
         /**
+         * @var Kata
+         */
+        private $kata;
+
+        /**
          * Initializes context.
          * Every scenario gets it's own context object.
          *
@@ -32,42 +36,47 @@ namespace {
          */
         public function __construct(array $parameters)
         {
-            $this->application = new KataApplication($this->getRootPath());
+            vfsStream::setup('src');
+
+            $testConfig = new Configuration();
+            $testConfig->setSrcPath(vfsStream::url('src'));
+
+            $this->application = new KataApplication($testConfig);
             $this->application->setAutoExit(false);
         }
-
-        /**
-         * @return string
-         */
-        private function getRootPath()
-        {
-            return dirname(__DIR__) . DIRECTORY_SEPARATOR;
-        }
-
-        /**
-         * @param string $filename
-         *
-         * @return string
-         */
-        private function getKataPath($filename = null)
-        {
-            return $this->getRootPath() . 'data' . DIRECTORY_SEPARATOR . $filename;
-        }
-
-        /**
-         * @return string
-         */
-        private function getSrcPath()
-        {
-            return $this->getRootPath() . 'src' . DIRECTORY_SEPARATOR;
-        }
+//
+//        /**
+//         * @return string
+//         */
+//        private function getRootPath()
+//        {
+//            return dirname(__DIR__) . DIRECTORY_SEPARATOR;
+//        }
+//
+//        /**
+//         * @param string $filename
+//         *
+//         * @return string
+//         */
+//        private function getKataPath($filename = null)
+//        {
+//            return $this->getRootPath() . 'data' . DIRECTORY_SEPARATOR . $filename;
+//        }
+//
+//        /**
+//         * @return string
+//         */
+//        private function getSrcPath()
+//        {
+//            return $this->getRootPath() . 'src' . DIRECTORY_SEPARATOR;
+//        }
 
         /**
          * @Given /^I have the \'([^\']*)\' configuration$/
          */
         public function iHaveTheConfiguration($kataFile)
         {
-            assertFileExists($this->getKataPath($kataFile), 'The kata file must exists.');
+//            assertFileExists($this->getKataPath($kataFile), 'The kata file must exists.');
         }
 
         /**
@@ -81,7 +90,7 @@ namespace {
 //            }
             $tester = new ApplicationTester($this->application);
             $input = $table->getRowsHash();
-            var_dump($input);
+
             if ($tester->run($input)) {
                 var_dump($tester->getDisplay());die("\n\n\nERROR\n\n\n");
             }
@@ -92,7 +101,7 @@ namespace {
          */
         public function theFileShouldBeCreated($filename)
         {
-            assertFileExists($this->getSrcPath() . $filename, 'The src file should be generated');
+            throw new PendingException();
         }
 
         /**
@@ -100,7 +109,7 @@ namespace {
          */
         public function theClassShouldBeCreated($class)
         {
-            var_dump($class);
+            throw new PendingException();
         }
 
         /**
@@ -108,7 +117,33 @@ namespace {
          */
         public function theMethodShouldBeCreated($method)
         {
-            var_dump($method);
+            throw new PendingException();
+        }
+
+        /**
+         * @Given /^I have the \'([^\']*)\' kata$/
+         */
+        public function iHaveTheKata($name)
+        {
+            $this->kata = new Kata($name);
+        }
+
+        /**
+         * @When /^I start the kata$/
+         */
+        public function iStartTheKata()
+        {
+            $this->kata->start();
+        }
+
+        /**
+         * @Then /^I should have a file named \'([^\']*)\' with content:$/
+         */
+        public function iShouldHaveAFileNamedWithContent($filename, PyStringNode $content)
+        {
+            throw new PendingException();
+//            assertFileExists($this->getRootPath() . $filename);
+//            assertEquals($content->getRaw(), file_get_contents($this->getRootPath() . $filename));
         }
     }
 }

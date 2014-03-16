@@ -32,6 +32,9 @@ class KataApplication extends Application
      */
     private $root;
 
+    /**
+     * @param string $root
+     */
     public function __construct($root)
     {
         $this->root = $root;
@@ -40,6 +43,9 @@ class KataApplication extends Application
         $this->registerCommand(new InitCommand());
     }
 
+    /**
+     * @param KataCommand $command
+     */
     protected function registerCommand(KataCommand $command)
     {
         $command->update($this);

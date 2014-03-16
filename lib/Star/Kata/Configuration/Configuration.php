@@ -7,6 +7,11 @@
 
 namespace Star\Kata\Configuration;
 
+use Star\Component\Collection\TypedCollection;
+use Star\Kata\Exception\InvalidArgumentException;
+use Star\Kata\Exception\RuntimeException;
+use Star\Kata\Model\Kata;
+
 /**
  * Class Configuration
  *
@@ -16,40 +21,73 @@ namespace Star\Kata\Configuration;
  */
 class Configuration
 {
-    /**
-     * @var string
-     */
-    private $name;
+    const CLASS_NAME = __CLASS__;
 
     /**
      * @var string
      */
     private $srcPath;
 
-    public function __construct($name, $srcPath)
+    /**
+     * @var Kata[]|TypedCollection
+     */
+    private $kataCollection;
+
+    public function __construct()
     {
-        $this->name = $name;
-        $this->srcPath = $srcPath;
+        $this->kataCollection = new TypedCollection(Kata::CLASS_NAME);
     }
 
     /**
-     * Returns the Name.
+     * Return the Kata with $name.
      *
-     * @return string
+     * @param string $name
+     *
+     * @throws \Star\Kata\Exception\InvalidArgumentException
+     * @return Kata
      */
-    public function getName()
+    public function getKata($name)
     {
-        return $this->name;
+        $kata = $this->kataCollection->get($name);
+        if (null === $kata) {
+            throw new InvalidArgumentException("Kata with name '{$name}' was not found.");
+        }
+
+        return $kata;
+    }
+
+    /**
+     * Set the name.
+     *
+     * @param string $name
+     */
+    public function addKata($name)
+    {
+        $this->kataCollection->set($name, new Kata($name));
     }
 
     /**
      * Returns the SrcPath.
      *
+     * @throws \Star\Kata\Exception\RuntimeException
      * @return string
      */
     public function getSrcPath()
     {
+        if (empty($this->srcPath)) {
+            throw new RuntimeException('SrcPath must be set.');
+        }
+
         return $this->srcPath;
     }
+
+    /**
+     * Set the srcPath.
+     *
+     * @param string $srcPath
+     */
+    public function setSrcPath($srcPath)
+    {
+        $this->srcPath = $srcPath;
+    }
 }
- 

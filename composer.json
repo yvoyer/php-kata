@@ -4,15 +4,21 @@
     "autoload": {
         "psr-0": {
             "": ["lib", "tests"]
-        }
+        },
+        "files": [
+            "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"
+        ]
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/yaml": "2.2.x-dev"
+        "symfony/yaml": "2.2.x-dev",
+        "star/collection": "~1.0"
     },
     "require-dev": {
         "behat/behat": "2.4.*@stable",
-        "phpunit/phpunit": "3.7.*"
+        "phpspec/phpspec": "2.0.*@dev",
+        "phpunit/phpunit": "~4.0",
+        "mikey179/vfsStream": "~1.0"
     },
     "config": {
         "bin-dir": "bin/"
