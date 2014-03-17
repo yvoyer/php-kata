@@ -37,13 +37,12 @@ namespace {
          */
         public function __construct(array $parameters)
         {
-            $root = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'feature-config.yml';
-            $yamlLoader = new YamlLoader($root);
+            vfsStream::setup('src');
+            $yamlLoader = new YamlLoader(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'kata' . DIRECTORY_SEPARATOR . 'php-kata.yml');
+            $config = $yamlLoader->load();
+            $config->setSrcPath(vfsStream::url('src'));
 
-            $testConfig = $yamlLoader->load();
-            $testConfig->setSrcPath($root);
-
-            $this->application = new KataApplication($testConfig);
+            $this->application = new KataApplication($config);
             $this->application->setAutoExit(false);
         }
 

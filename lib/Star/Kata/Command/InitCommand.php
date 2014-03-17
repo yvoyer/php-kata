@@ -7,13 +7,12 @@
 
 namespace Star\Kata\Command;
 
-use Star\Kata\Configuration\YamlLoader;
-use Star\Kata\KataApplication;
+use Star\Kata\Configuration\Configuration;
+use Star\Kata\Exception\Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class TestCommand
@@ -22,17 +21,24 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @package Star\Kata\Command
  */
-class InitCommand extends Command implements KataCommand
+class InitCommand extends Command
 {
     /**
-     * @var string
+     * @var Configuration
      */
-    private $root;
+    private $configuration;
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function __construct(Configuration $configuration)
+    {
+        parent::__construct('init');
+        $this->configuration = $configuration;
+    }
 
     public function configure()
     {
-        $this->setName('init');
-
         $this->addArgument('kata', InputArgument::REQUIRED, 'Name of kata');
     }
 
@@ -44,49 +50,28 @@ class InitCommand extends Command implements KataCommand
      * execute() method, you set the code to execute by passing
      * a Closure to the setCode() method.
      *
-     * @param InputInterface  $input  An InputInterface instance
+     * @param InputInterface $input An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
-     * @return null|integer null or 0 if everything went fine, or an error code
-     *
-     * @throws \LogicException When this abstract method is not implemented
-     * @see    setCode()
+     * @throws \RuntimeException
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (empty($this->root)) {
-            throw new \RuntimeException('Root is not defined.');
+        try {
+            $kata = $input->getArgument('kata');
+            if (empty($kata)) {
+                throw new \RuntimeException('Kata must be supplied.');
+            }
+
+            $kata = $this->configuration->getKata($kata);
+            $kata->start();
+        } catch (Exception $e) {
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
+            return 1;
         }
 
-        $kata = $input->getArgument('kata');
-        if (empty($kata)) {
-            throw new \RuntimeException('Kata must be supplied.');
-        }
-
-        $configFile = $this->root . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'db.kata';
-
-        $loader = new YamlLoader();
-        $configuration = $loader->load($configFile);
-
-
-var_dump($configuration);
-//        mkdir($this->root . DIRECTORY_SEPARATOR . 'src');
-//        $sutFile = file_put_contents(
-//            $this->root . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . ucfirst($name), // todo use inflector
-//            file_get_contents($this->root . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . $srcFile . '.kata')
-//        );
-//
-//        var_dump($this->root);
-
-
-    }
-
-    /**
-     * @param KataApplication $application
-     */
-    public function update(KataApplication $application)
-    {
-        $this->root = $application->getRootPath();
+        return 0;
     }
 }
  

@@ -1,0 +1,5 @@
+src-path: src
+katas:
+    fibonnaci:
+        class: Star\Kata\Data\FibonacciKata
+           # steps:

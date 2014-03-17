@@ -8,13 +8,8 @@
 namespace Star\Kata;
 
 use Star\Kata\Command\InitCommand;
-use Star\Kata\Command\KataCommand;
+use Star\Kata\Configuration\Configuration;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Command\HelpCommand;
-use Symfony\Component\Console\Command\ListCommand;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class KataApplication
@@ -33,31 +28,14 @@ class KataApplication extends Application
     private $root;
 
     /**
-     * @param string $root
+     * @param Configuration $configuration
      */
-    public function __construct($root)
+    public function __construct(Configuration $configuration)
     {
-        $this->root = $root;
+        $this->root = $configuration->getSrcPath();
 
         parent::__construct('phpkata', self::VERSION);
-        $this->registerCommand(new InitCommand());
-    }
-
-    /**
-     * @param KataCommand $command
-     */
-    protected function registerCommand(KataCommand $command)
-    {
-        $command->update($this);
-        $this->add($command);
-    }
-
-    /**
-     * @return string
-     */
-    public function getRootPath()
-    {
-        return $this->root;
+        $this->add(new InitCommand($configuration));
     }
 }
  

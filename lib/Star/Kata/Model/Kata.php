@@ -8,7 +8,6 @@
 namespace Star\Kata\Model;
 
 use Star\Component\Collection\TypedCollection;
-use Star\Kata\Exception\MissingConfigurationException;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Step\Step;
 
@@ -33,6 +32,9 @@ class Kata
      */
     private $name;
 
+    /**
+     * @param string $name
+     */
     public function __construct($name)
     {
         $this->name = $name;
@@ -45,7 +47,7 @@ class Kata
      */
     public function start()
     {
-        if (count($this->steps) == 0) {
+        if ($this->steps->isEmpty()) {
             throw new RuntimeException('Should have at least one step');
         }
 

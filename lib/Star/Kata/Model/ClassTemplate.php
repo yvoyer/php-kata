@@ -16,6 +16,8 @@ namespace Star\Kata\Model;
  */
 interface ClassTemplate
 {
+    const INTERFACE_NAME = __CLASS__;
+
     /**
      * Return the name of the class to create.
      *
