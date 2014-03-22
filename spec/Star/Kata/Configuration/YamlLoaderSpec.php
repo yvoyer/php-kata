@@ -68,4 +68,10 @@ class YamlLoaderSpec extends ObjectBehavior
         $this->beConstructedWith($this->getFixtureRoot('missing-config-no-katas.yml'));
         $this->shouldThrow(MissingConfigurationException::getNoKataDefinedException())->duringLoad();
     }
+
+    function it_throw_exception_when_no_kata_class_is_defined()
+    {
+        $this->beConstructedWith($this->getFixtureRoot('missing-config-class-name.yml'));
+        $this->shouldThrow(MissingConfigurationException::getNoKataDefinedException())->duringLoad();
+    }
 }

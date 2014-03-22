@@ -11,6 +11,9 @@ use Star\Component\Collection\TypedCollection;
 use Star\Kata\Exception\InvalidArgumentException;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Kata;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Processor;
 
 /**
  * Class Configuration
@@ -19,7 +22,7 @@ use Star\Kata\Model\Kata;
  *
  * @package Star\Kata\Configuration
  */
-class Configuration
+class Configuration implements ConfigurationInterface
 {
     const CLASS_NAME = __CLASS__;
 
@@ -36,6 +39,21 @@ class Configuration
     public function __construct()
     {
         $this->kataCollection = new TypedCollection(Kata::CLASS_NAME);
+    }
+
+    public function load(array $config)
+    {
+        $processor = new Processor();
+        $config = $processor->processConfiguration($this, $config);
+
+        $this->setSrcPath($config['src_path']);
+        foreach ($config['katas'] as $key => $kataInfo) {
+            $kataConfig = $processor->processConfiguration(new KataConfiguration($key), array($key => $kataInfo));
+            $class = $kataConfig['class'];
+            $name = $kataConfig['name'];
+
+            $this->addKata(new $class($name));
+        }
     }
 
     /**
@@ -57,13 +75,13 @@ class Configuration
     }
 
     /**
-     * Set the name.
+     * Add the $kata.
      *
-     * @param string $name
+     * @param \Star\Kata\Model\Kata $kata
      */
-    public function addKata($name)
+    public function addKata(Kata $kata)
     {
-        $this->kataCollection->set($name, new Kata($name));
+        $this->kataCollection->set($kata->getName(), $kata);
     }
 
     /**
@@ -89,5 +107,25 @@ class Configuration
     public function setSrcPath($srcPath)
     {
         $this->srcPath = $srcPath;
+    }
+
+    /**
+     * Generates the configuration tree builder.
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
+     */
+    public function getConfigTreeBuilder()
+    {
+        $builder = new TreeBuilder();
+        $treeNode = $builder->root('php-kata');
+        $treeNode
+            ->children()
+                ->scalarNode('src_path')->isRequired()->end()
+                ->variableNode('katas')
+                ->end()
+            ->end()
+        ;
+
+        return $builder;
     }
 }

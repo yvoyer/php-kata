@@ -21,10 +21,10 @@ use Star\Kata\Model\Step\CreateClassStep;
  */
 class FibonacciKata extends Kata implements ClassTemplate
 {
-    public function __construct(Configuration $config)
+    public function __construct(/*Configuration $config*/)
     {
-        parent::__construct('fibonacci');
-        $this->addStep(new CreateClassStep($config, $this));
+//        parent::__construct('fibonacci');
+//        $this->addStep(new CreateClassStep($config, $this));
     }
 
     /**

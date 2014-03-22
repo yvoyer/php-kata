@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/yaml": "2.2.x-dev",
-        "star/collection": "~1.0"
+        "star/collection": "~1.0",
+        "symfony/config": "2.4"
     },
     "require-dev": {
         "behat/behat": "2.4.*@stable",

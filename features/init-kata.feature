@@ -13,7 +13,7 @@ Feature:
 #    And The method 'Test::getValue' should be created
 
   Scenario: Generate a src file
-    Given I have the 'assert-true' kata
+    Given I have the 'fibonacci' kata
     When I start the kata
     Then I should have a file named 'AssertTrue.php' with content:
       """

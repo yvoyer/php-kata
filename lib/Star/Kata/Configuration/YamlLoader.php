@@ -27,13 +27,9 @@ class YamlLoader
     private $path;
 
     /**
-     * @var array
-     */
-    private $config;
-
-    /**
      * @param string $path The path to the config file
      * @throws \Star\Kata\Exception\RuntimeException
+     * todo move path to load
      */
     public function __construct($path)
     {
@@ -51,35 +47,42 @@ class YamlLoader
      */
     public function load()
     {
-        $this->config = Yaml::parse($this->path);
-        if (empty($this->config)) {
+        $config = Yaml::parse($this->path);
+        if (empty($config)) {
             throw new EmptyConfigurationException("The file can't be empty");
         }
 
         $configuration = new Configuration();
+        $configuration->load($config);
 
-        $this->assertConfigIsPresent('src-path');
-        $configuration->setSrcPath($this->config['src-path']);
-
-        $this->assertConfigIsPresent('katas');
-        if (false === is_array($this->config['katas'])) {
-            throw MissingConfigurationException::getNoKataDefinedException();
-        }
-
-        foreach ($this->config['katas'] as $kataName => $kata) {
-            $configuration->addKata($kataName);
-        }
+//        $this->assertConfigIsPresent('src-path', $config);
+//        $configuration->setSrcPath($config['src-path']);
+//
+//        $this->assertConfigIsPresent('katas', $config);
+//        if (false === is_array($config['katas'])) {
+//            throw MissingConfigurationException::getNoKataDefinedException();
+//        }
+//
+//        foreach ($config['katas'] as $kataName => $kataConfig) {
+//            if (false === is_array($kataConfig)) {
+//                throw MissingConfigurationException::getConfigurationNotDefinedException('class');
+//            }
+//            $this->assertConfigIsPresent('class', $kataConfig);
+//
+//            $configuration->addKata($kataName);
+//        }
 
         return $configuration;
     }
 
     /**
      * @param string $index
+     * @param array $config
      * @throws \Star\Kata\Exception\Configuration\MissingConfigurationException
      */
-    private function assertConfigIsPresent($index)
+    private function assertConfigIsPresent($index, array $config)
     {
-        if (false === array_key_exists($index, $this->config)) {
+        if (false === array_key_exists($index, $config)) {
             throw MissingConfigurationException::getConfigurationNotDefinedException($index);
         }
     }

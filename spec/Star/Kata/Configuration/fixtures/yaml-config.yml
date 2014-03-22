@@ -1,5 +1,6 @@
 src-path: src-path
 katas:
-  kata1:
-  kata2:
-
+    kata1:
+        class: \stdClass
+    kata2:
+        class: \stdClass
