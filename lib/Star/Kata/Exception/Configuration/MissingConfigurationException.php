@@ -17,16 +17,6 @@ namespace Star\Kata\Exception\Configuration;
 class MissingConfigurationException extends \Exception
 {
     /**
-     * @param string $config
-     *
-     * @return MissingConfigurationException
-     */
-    public static function getConfigurationNotDefinedException($config)
-    {
-        return new self("The configuration '{$config}' was not defined.");
-    }
-
-    /**
      * @return MissingConfigurationException
      */
     public static function getNoKataDefinedException()

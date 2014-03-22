@@ -23,7 +23,7 @@ class FibonacciKata extends Kata implements ClassTemplate
 {
     public function __construct(/*Configuration $config*/)
     {
-//        parent::__construct('fibonacci');
+        parent::__construct('fibonacci');
 //        $this->addStep(new CreateClassStep($config, $this));
     }
 

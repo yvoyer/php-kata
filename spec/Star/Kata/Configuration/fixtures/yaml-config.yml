@@ -1,6 +1,9 @@
-src-path: src-path
-katas:
-    kata1:
-        class: \stdClass
-    kata2:
-        class: \stdClass
+php-kata:
+  src-path: src-path
+  katas:
+      kata1:
+          class: Star\Kata\Model\Kata
+          name: kata1
+      kata2:
+          class: Star\Kata\Model\Kata
+          name: kata2

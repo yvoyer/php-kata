@@ -8,7 +8,6 @@
 namespace Star\Kata\Configuration;
 
 use Star\Kata\Exception\Configuration\EmptyConfigurationException;
-use Star\Kata\Exception\Configuration\MissingConfigurationException;
 use Star\Kata\Exception\RuntimeException;
 use Symfony\Component\Yaml\Yaml;
 
@@ -22,32 +21,19 @@ use Symfony\Component\Yaml\Yaml;
 class YamlLoader
 {
     /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @param string $path The path to the config file
+     * @param string $path
+     *
+     * @throws \Star\Kata\Exception\Configuration\EmptyConfigurationException
      * @throws \Star\Kata\Exception\RuntimeException
-     * todo move path to load
+     * @return Configuration
      */
-    public function __construct($path)
+    public function load($path)
     {
         if (false === file_exists($path)) {
             throw new RuntimeException("File '{$path}' can't be found.");
         }
 
-        $this->path = $path;
-    }
-
-    /**
-     * @throws \Star\Kata\Exception\Configuration\EmptyConfigurationException
-     * @throws \Star\Kata\Exception\Configuration\MissingConfigurationException
-     * @return Configuration
-     */
-    public function load()
-    {
-        $config = Yaml::parse($this->path);
+        $config = Yaml::parse($path);
         if (empty($config)) {
             throw new EmptyConfigurationException("The file can't be empty");
         }
@@ -55,35 +41,6 @@ class YamlLoader
         $configuration = new Configuration();
         $configuration->load($config);
 
-//        $this->assertConfigIsPresent('src-path', $config);
-//        $configuration->setSrcPath($config['src-path']);
-//
-//        $this->assertConfigIsPresent('katas', $config);
-//        if (false === is_array($config['katas'])) {
-//            throw MissingConfigurationException::getNoKataDefinedException();
-//        }
-//
-//        foreach ($config['katas'] as $kataName => $kataConfig) {
-//            if (false === is_array($kataConfig)) {
-//                throw MissingConfigurationException::getConfigurationNotDefinedException('class');
-//            }
-//            $this->assertConfigIsPresent('class', $kataConfig);
-//
-//            $configuration->addKata($kataName);
-//        }
-
         return $configuration;
-    }
-
-    /**
-     * @param string $index
-     * @param array $config
-     * @throws \Star\Kata\Exception\Configuration\MissingConfigurationException
-     */
-    private function assertConfigIsPresent($index, array $config)
-    {
-        if (false === array_key_exists($index, $config)) {
-            throw MissingConfigurationException::getConfigurationNotDefinedException($index);
-        }
     }
 }

@@ -8,11 +8,14 @@
 namespace Star\Kata\Configuration;
 
 use Star\Component\Collection\TypedCollection;
+use Star\Kata\Exception\Configuration\MissingConfigurationException;
+use Star\Kata\Exception\Configuration\MissingKataConfigurationException;
 use Star\Kata\Exception\InvalidArgumentException;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Kata;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 
 /**
@@ -44,11 +47,24 @@ class Configuration implements ConfigurationInterface
     public function load(array $config)
     {
         $processor = new Processor();
-        $config = $processor->processConfiguration($this, $config);
+        try {
+            $config = $processor->processConfiguration($this, $config);
+        } catch (InvalidConfigurationException $ex) {
+            throw new MissingConfigurationException($ex->getMessage(), null, $ex);
+        }
 
         $this->setSrcPath($config['src_path']);
+
+        if (empty($config['katas'])) {
+            throw MissingConfigurationException::getNoKataDefinedException();
+        }
+
         foreach ($config['katas'] as $key => $kataInfo) {
-            $kataConfig = $processor->processConfiguration(new KataConfiguration($key), array($key => $kataInfo));
+            try {
+                $kataConfig = $processor->processConfiguration(new KataConfiguration($key), array($key => $kataInfo));
+            } catch (InvalidConfigurationException $ex) {
+                throw new MissingKataConfigurationException($ex->getMessage(), null, $ex);
+            }
             $class = $kataConfig['class'];
             $name = $kataConfig['name'];
 
@@ -121,8 +137,7 @@ class Configuration implements ConfigurationInterface
         $treeNode
             ->children()
                 ->scalarNode('src_path')->isRequired()->end()
-                ->variableNode('katas')
-                ->end()
+                ->variableNode('katas')->isRequired()->end()
             ->end()
         ;
 
