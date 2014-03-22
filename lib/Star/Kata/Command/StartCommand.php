@@ -15,13 +15,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class TestCommand
+ * Class StartCommand
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Command
  */
-class InitCommand extends Command
+class StartCommand extends Command
 {
     /**
      * @var Configuration
@@ -33,13 +33,14 @@ class InitCommand extends Command
      */
     public function __construct(Configuration $configuration)
     {
-        parent::__construct('init');
+        parent::__construct('start');
         $this->configuration = $configuration;
     }
 
     public function configure()
     {
         $this->addArgument('kata', InputArgument::REQUIRED, 'Name of kata');
+        $this->setDescription('Start the specified kata.');
     }
 
     /**

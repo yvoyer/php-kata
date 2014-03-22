@@ -38,8 +38,9 @@ namespace {
         public function __construct(array $parameters)
         {
             vfsStream::setup('src');
-            $yamlLoader = new YamlLoader(dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'kata' . DIRECTORY_SEPARATOR . 'php-kata.yml');
-            $config = $yamlLoader->load();
+            $path = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'kata' . DIRECTORY_SEPARATOR . 'php-kata.yml';
+            $yamlLoader = new YamlLoader();
+            $config = $yamlLoader->load($path);
             $config->setSrcPath(vfsStream::url('src'));
 
             $this->application = new KataApplication($config);

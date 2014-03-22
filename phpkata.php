@@ -13,7 +13,7 @@ namespace {
     use Star\Kata\KataApplication;
     use Symfony\Component\Console\Input\ArgvInput;
 
-    $loader = new YamlLoader('kata' . DIRECTORY_SEPARATOR . 'php-kata.yml');
-    $application = new KataApplication($loader->load());
+    $loader = new YamlLoader();
+    $application = new KataApplication($loader->load('kata' . DIRECTORY_SEPARATOR . 'php-kata.yml'));
     $application->run(new ArgvInput($argv));
 }

@@ -7,7 +7,7 @@
 
 namespace Star\Kata;
 
-use Star\Kata\Command\InitCommand;
+use Star\Kata\Command\StartCommand;
 use Star\Kata\Configuration\Configuration;
 use Symfony\Component\Console\Application;
 
@@ -35,7 +35,7 @@ class KataApplication extends Application
         $this->root = $configuration->getSrcPath();
 
         parent::__construct('phpkata', self::VERSION);
-        $this->add(new InitCommand($configuration));
+        $this->add(new StartCommand($configuration));
     }
 }
  
