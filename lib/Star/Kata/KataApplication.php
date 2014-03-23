@@ -7,6 +7,7 @@
 
 namespace Star\Kata;
 
+use Star\Kata\Command\EndCommand;
 use Star\Kata\Command\StartCommand;
 use Star\Kata\Configuration\Configuration;
 use Symfony\Component\Console\Application;
@@ -36,6 +37,7 @@ class KataApplication extends Application
 
         parent::__construct('phpkata', self::VERSION);
         $this->add(new StartCommand($configuration));
+        $this->add(new EndCommand($configuration));
     }
 }
  

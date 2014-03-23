@@ -97,4 +97,32 @@ class CreateClassStep implements Step
             mkdir($path);
         }
     }
+
+    /**
+     * Returns the Class.
+     *
+     * @return string
+     */
+    public function getTestClass()
+    {
+        throw new \RuntimeException('Method ' . __CLASS__ . '::getTestClass() not implemented yet.');
+    }
+
+    /**
+     * Returns the TestCase.
+     *
+     * @return string
+     */
+    public function getTestCase()
+    {
+        throw new \RuntimeException('Method ' . __CLASS__ . '::getTestCase() not implemented yet.');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInitialized()
+    {
+        throw new \RuntimeException('Method ' . __CLASS__ . '::isInitialized() not implemented yet.');
+    }
 }

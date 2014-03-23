@@ -7,10 +7,9 @@
 
 namespace Star\Kata\Data;
 
-use Star\Kata\Configuration\Configuration;
 use Star\Kata\Model\ClassTemplate;
 use Star\Kata\Model\Kata;
-use Star\Kata\Model\Step\CreateClassStep;
+use Star\Kata\Model\Step\TestStep;
 
 /**
  * Class FibonacciKata
@@ -24,6 +23,11 @@ class FibonacciKata extends Kata implements ClassTemplate
     public function __construct(/*Configuration $config*/)
     {
         parent::__construct('fibonacci');
+        $this->addStep(new TestStep('\MyClassTest', 'testShouldReturnTrue'));
+        $this->addStep(new TestStep('\MyClassTest', 'testShouldReturnFalse'));
+        // todo create the test case
+        // todo create the class under tests
+//        $this->addStep(new CreateClassStep($config, $this));
 //        $this->addStep(new CreateClassStep($config, $this));
     }
 
@@ -46,5 +50,15 @@ class FibonacciKata extends Kata implements ClassTemplate
     {
 //        return '';
         throw new \RuntimeException('Method ' . __CLASS__ . '::getContent() not implemented yet.');
+    }
+
+    public function getDescription()
+    {
+        return <<<INFO
+
+Fibonacci sequence
+Objective: calculate the sum of the two previous numbers.
+
+INFO;
     }
 }

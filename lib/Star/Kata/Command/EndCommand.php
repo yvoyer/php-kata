@@ -15,13 +15,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class StartCommand
+ * Class EndCommand
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Command
  */
-class StartCommand extends Command
+class EndCommand extends Command
 {
     /**
      * @var Configuration
@@ -33,14 +33,14 @@ class StartCommand extends Command
      */
     public function __construct(Configuration $configuration)
     {
-        parent::__construct('start');
+        parent::__construct('end');
         $this->configuration = $configuration;
     }
 
     public function configure()
     {
         $this->addArgument('kata', InputArgument::REQUIRED, 'Name of kata');
-        $this->setDescription('Start the specified kata.');
+        $this->setDescription('End the specified kata.');
     }
 
     /**
@@ -66,9 +66,15 @@ class StartCommand extends Command
             }
 
             $kata = $this->configuration->getKata($kata);
-            $kata->start();
 
             $output->writeln('<info>' . $kata->getDescription() . '</info>');
+            $success = $kata->end();
+
+            if ($success) {
+                $output->writeln('    <comment>Objective completed.</comment>');
+            } else {
+                $output->writeln('    <error>Objective failed.</error>');
+            }
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
             return 1;
