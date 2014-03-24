@@ -68,7 +68,7 @@ class TestStep implements Step
      */
     public function isInitialized()
     {
-        // todo 
+        // todo
         return true;
     }
 }

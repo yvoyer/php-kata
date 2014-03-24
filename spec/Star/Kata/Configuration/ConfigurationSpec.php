@@ -109,4 +109,13 @@ class ConfigurationSpec extends ObjectBehavior
 
         return $config;
     }
+
+    function it_should_build_the_config_even_with_no_existing_class()
+    {
+        $config = $this->getValidConfigArray();
+        $config['php-kata']['katas']['kata1']['class'] = '\SomeNotExistingClass';
+        $this->load($config);
+        $this->shouldThrow(new \Star\Kata\Exception\InvalidArgumentException("Kata with name 'kata-name' was not found."))
+            ->duringGetKata('kata-name');
+    }
 }

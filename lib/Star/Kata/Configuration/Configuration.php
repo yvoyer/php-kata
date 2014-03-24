@@ -44,6 +44,13 @@ class Configuration implements ConfigurationInterface
         $this->kataCollection = new TypedCollection(Kata::CLASS_NAME);
     }
 
+    /**
+     * @param array $config
+     *
+     * @throws \Star\Kata\Exception\Configuration\MissingKataConfigurationException
+     * @throws \Star\Kata\Exception\Configuration\MissingConfigurationException
+     * @throws \Star\Kata\Exception\Configuration\MissingConfigurationException
+     */
     public function load(array $config)
     {
         $processor = new Processor();
@@ -68,7 +75,9 @@ class Configuration implements ConfigurationInterface
             $class = $kataConfig['class'];
             $name = $kataConfig['name'];
 
-            $this->addKata(new $class($name));
+            if (class_exists($class)) {
+                $this->addKata(new $class($name));
+            }
         }
     }
 
