@@ -76,7 +76,7 @@ class Configuration implements ConfigurationInterface
             $name = $kataConfig['name'];
 
             if (class_exists($class)) {
-                $this->addKata(new $class($name));
+                $this->addKata(new $class($this, $name));
             }
         }
     }

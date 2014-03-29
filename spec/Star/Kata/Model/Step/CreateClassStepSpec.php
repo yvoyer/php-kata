@@ -27,7 +27,7 @@ class CreateClassStepSpec extends ObjectBehavior
      */
     private $content;
 
-    function let(ClassTemplate $template, Configuration $config)
+    function let(ClassTemplate $template)
     {
         $this->template = $template;
         $this->root = vfsStream::setup('src');
@@ -43,8 +43,7 @@ class CreateClass
 CONTENT;
 
         $this->template->getContent()->willReturn($this->content);
-        $config->getSrcPath()->willReturn(vfsStream::url('src'));
-        $this->beConstructedWith($config, $this->template);
+        $this->beConstructedWith(vfsStream::url('src'), $this->template);
     }
 
     function it_is_initializable()

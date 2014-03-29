@@ -35,12 +35,12 @@ class CreateClassStep implements Step
     private $template;
 
     /**
-     * @param Configuration $config
+     * @param string $path
      * @param \Star\Kata\Model\ClassTemplate $template
      */
-    public function __construct(Configuration $config, ClassTemplate $template)
+    public function __construct($path, ClassTemplate $template)
     {
-        $this->root = $config->getSrcPath();
+        $this->root = $path;
         $this->class = $template->getClassName() . '.php';
         $this->template = $template;
     }

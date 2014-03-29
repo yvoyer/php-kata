@@ -21,13 +21,13 @@ Feature:
       | start   | fibonacci |
     Then I should have a file 'FibonacciSequence.php' with content:
     """
-      <?php
-      class FibonacciSequence
-      {
-          public function getNumber()
-          {
-          }
-      }
+    <?php
+    class FibonacciSequence
+    {
+        public function getNumber()
+        {
+        }
+    }
     """
     And I should have a file 'FibonacciSequenceTest.php' with content:
     """
@@ -47,38 +47,38 @@ Feature:
           }
       }
     """
-
-  Scenario: Compute failed objectives
-    Given The file 'FibonacciSequence.php' contains:
-      """
-      <?php
-      class FibonacciSequence
-      {
-          public function getNumber()
-          {
-          }
-      }
-      """
-    When I launch the command:
-      | command | kata      |
-      | stop    | fibonacci |
-    Then The user should have 0 points
-    And The Objectives should be failed
-
-  Scenario: Compute successful objectives
-    Given The file 'FibonacciSequence.php' contains:
-    """
-      <?php
-      class FibonacciSequence
-      {
-          public function getNumber()
-          {
-              return 0;
-          }
-      }
-      """
-    When I launch the command:
-      | command | kata      |
-      | stop    | fibonacci |
-    Then The user should have 5 points
-    And The Objectives should be successful
+#
+#  Scenario: Compute failed objectives
+#    Given The file 'FibonacciSequence.php' contains:
+#      """
+#      <?php
+#      class FibonacciSequence
+#      {
+#          public function getNumber()
+#          {
+#          }
+#      }
+#      """
+#    When I launch the command:
+#      | command | kata      |
+#      | stop    | fibonacci |
+#    Then The user should have 0 points
+#    And The Objectives should be failed
+#
+#  Scenario: Compute successful objectives
+#    Given The file 'FibonacciSequence.php' contains:
+#    """
+#      <?php
+#      class FibonacciSequence
+#      {
+#          public function getNumber()
+#          {
+#              return 0;
+#          }
+#      }
+#      """
+#    When I launch the command:
+#      | command | kata      |
+#      | stop    | fibonacci |
+#    Then The user should have 5 points
+#    And The Objectives should be successful

@@ -7,8 +7,11 @@
 
 namespace Star\Kata\Data;
 
+use Star\Kata\Configuration\Configuration;
 use Star\Kata\Model\ClassTemplate;
+use Star\Kata\Model\FileTemplate;
 use Star\Kata\Model\Kata;
+use Star\Kata\Model\Step\CreateClassStep;
 use Star\Kata\Model\Step\TestStep;
 
 /**
@@ -18,47 +21,39 @@ use Star\Kata\Model\Step\TestStep;
  *
  * @package Star\Kata\Data
  */
-class FibonacciKata extends Kata implements ClassTemplate
+class FibonacciKata extends Kata
 {
-    public function __construct(/*Configuration $config*/)
-    {
-        parent::__construct('fibonacci');
-        $this->addStep(new TestStep('\MyClassTest', 'testShouldReturnTrue'));
-        $this->addStep(new TestStep('\MyClassTest', 'testShouldReturnFalse'));
-        // todo create the test case
-        // todo create the class under tests
-//        $this->addStep(new CreateClassStep($config, $this));
-//        $this->addStep(new CreateClassStep($config, $this));
-    }
-
     /**
-     * Return the name of the class to create.
-     *
-     * @return string
+     * @param Configuration $config
      */
-    public function getClassName()
+    protected function configure(Configuration $config)
     {
-//        throw new \RuntimeException('Method ' . __CLASS__ . '::getClassName() not implemented yet.');
-    }
+        $this->setName('fibonacci');
+        $sutContent = <<<SUTCONTENT
 
-    /**
-     * Return the content of the class definition.
-     *
-     * @return string
-     */
-    public function getContent()
+<?php
+class FibonacciSequence
+{
+    public function getNumber()
     {
-//        return '';
-        throw new \RuntimeException('Method ' . __CLASS__ . '::getContent() not implemented yet.');
     }
+}
+SUTCONTENT;
 
-    public function getDescription()
-    {
-        return <<<INFO
+        $testContent = <<<TESTCONTENT
+
+TESTCONTENT;
+
+        $this->addStep(new CreateClassStep($config->getSrcPath(), new FileTemplate('FibonacciSequence', $sutContent)));
+//        $this->addStep(new CreateClassStep($config->getSrcPath(), new FileTemplate('FibonacciSequenceTest', $testContent)));
+
+
+        $this->setDescription(<<<INFO
 
 Fibonacci sequence
 Objective: calculate the sum of the two previous numbers.
 
-INFO;
+INFO
+        );
     }
 }

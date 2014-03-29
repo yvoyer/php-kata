@@ -24,9 +24,11 @@ class ConfigurationSpec extends ObjectBehavior
         $this->shouldThrow('Star\Kata\Exception\InvalidArgumentException')->duringGetKata('not-found');
     }
 
-    function it_must_return_a_kata_with_configured_name()
+    function it_must_return_a_kata_with_configured_name(Kata $kata)
     {
-        $this->addKata(new Kata('name'));
+        $kata->getName()->willReturn('name');
+
+        $this->addKata($kata);
         $this->getKata('name')->shouldReturnAnInstanceOf(Kata::CLASS_NAME);
         $this->getKata('name')->getName()->shouldReturn('name');
     }

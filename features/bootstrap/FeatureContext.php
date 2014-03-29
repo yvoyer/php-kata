@@ -50,6 +50,7 @@ namespace {
         {
             $this->config = new Configuration();
             $this->config->load(Yaml::parse($string));
+            $this->config->setSrcPath(vfsStream::url('src'));
         }
 
         /**
@@ -57,7 +58,7 @@ namespace {
          */
         public function theFolderIsEmpty($sourceFolder)
         {
-            $expected = array('src' => array());
+            $expected = array($sourceFolder => array());
             $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
             assertSame($expected, $structure);
         }
@@ -70,12 +71,8 @@ namespace {
             $input = $table->getHash();
             $input = $input[0];
 
-            $path = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'kata' . DIRECTORY_SEPARATOR . 'php-kata.yml';
-            $yamlLoader = new YamlLoader();
-            $config = $yamlLoader->load($path);
-            $config->setSrcPath(vfsStream::url('src'));
 
-            $this->application = new KataApplication($config);
+            $this->application = new KataApplication($this->config);
             $this->application->setAutoExit(false);
 
             $tester = new ApplicationTester($this->application);
@@ -87,9 +84,12 @@ namespace {
         /**
          * @Then /^I should have a file \'([^\']*)\' with content:$/
          */
-        public function iShouldHaveAFileWithContent($filename, PyStringNode $string)
+        public function iShouldHaveAFileWithContent($filename, PyStringNode $content)
         {
-            throw new PendingException();
+            $expected = array('src' => array($filename => $content->getRaw()));
+            $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+
+            assertSame($expected, $structure);
         }
 
         /**

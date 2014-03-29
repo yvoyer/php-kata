@@ -1,3 +1,5 @@
 suites:
     lib:
         src_path: lib
+
+formatter.name: dot

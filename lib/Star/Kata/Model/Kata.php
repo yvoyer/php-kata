@@ -8,6 +8,7 @@
 namespace Star\Kata\Model;
 
 use Star\Component\Collection\TypedCollection;
+use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Step\Step;
 
@@ -33,12 +34,31 @@ class Kata
     private $name;
 
     /**
+     * @var string
+     */
+    private $description = '';
+
+    /**
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(Configuration $config, $name = '')
     {
         $this->name = $name;
         $this->steps = new TypedCollection(Step::INTERFACE_NAME);
+
+        $this->configure($config);
+        if (empty($this->name)) {
+            throw new RuntimeException('Name should be configured.');
+        }
+    }
+
+    /**
+     * Configure the kata.
+     *
+     * @param Configuration $config
+     */
+    protected function configure(Configuration $config)
+    {
     }
 
     private function isInitialized()
@@ -96,6 +116,14 @@ class Kata
     }
 
     /**
+     * @param string $name
+     */
+    protected function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -104,10 +132,20 @@ class Kata
     }
 
     /**
+     * Set the description.
+     *
+     * @param string $description
+     */
+    protected function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
      * @return string
      */
     public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 }
