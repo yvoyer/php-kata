@@ -25,11 +25,6 @@ class FibonacciKataSpec extends ObjectBehavior
         $this->shouldHaveType(Kata::CLASS_NAME);
     }
 
-    function it_is_a_class_template()
-    {
-        $this->shouldHaveType(ClassTemplate::INTERFACE_NAME);
-    }
-
     function it_has_a_name()
     {
         $this->getName()->shouldReturn('fibonacci');

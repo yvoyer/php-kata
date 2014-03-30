@@ -50,7 +50,6 @@ namespace {
         {
             $this->config = new Configuration();
             $this->config->load(Yaml::parse($string));
-            $this->config->setSrcPath(vfsStream::url('src'));
         }
 
         /**
@@ -71,7 +70,6 @@ namespace {
             $input = $table->getHash();
             $input = $input[0];
 
-
             $this->application = new KataApplication($this->config);
             $this->application->setAutoExit(false);
 
@@ -86,10 +84,11 @@ namespace {
          */
         public function iShouldHaveAFileWithContent($filename, PyStringNode $content)
         {
-            $expected = array('src' => array($filename => $content->getRaw()));
             $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
 
-            assertSame($expected, $structure);
+            assertArrayHasKey('src', $structure, 'The src folder should be present');
+            assertArrayHasKey($filename, $structure['src'], 'The file should be present');
+            assertSame($content->getRaw(), $structure['src'][$filename], 'The content of file ' . $filename . ' should be present');
         }
 
         /**

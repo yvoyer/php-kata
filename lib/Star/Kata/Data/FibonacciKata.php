@@ -29,24 +29,19 @@ class FibonacciKata extends Kata
     protected function configure(Configuration $config)
     {
         $this->setName('fibonacci');
-        $sutContent = <<<SUTCONTENT
 
-<?php
-class FibonacciSequence
-{
-    public function getNumber()
-    {
-    }
-}
-SUTCONTENT;
-
-        $testContent = <<<TESTCONTENT
-
-TESTCONTENT;
-
-        $this->addStep(new CreateClassStep($config->getSrcPath(), new FileTemplate('FibonacciSequence', $sutContent)));
-//        $this->addStep(new CreateClassStep($config->getSrcPath(), new FileTemplate('FibonacciSequenceTest', $testContent)));
-
+        $this->addStep(
+            new CreateClassStep(
+                $config->getSrcPath(),
+                new FileTemplate('FibonacciSequence', $this->getSystemUnderTestContent())
+            )
+        );
+        $this->addStep(
+            new CreateClassStep(
+                $config->getSrcPath(),
+                new FileTemplate('FibonacciSequenceTest', $this->getTestContent())
+            )
+        );
 
         $this->setDescription(<<<INFO
 
@@ -55,5 +50,40 @@ Objective: calculate the sum of the two previous numbers.
 
 INFO
         );
+    }
+
+    private function getSystemUnderTestContent()
+    {
+        return <<<SUTCONTENT
+<?php
+class FibonacciSequence
+{
+    public function getNumber()
+    {
+    }
+}
+SUTCONTENT;
+    }
+
+    private function getTestContent()
+    {
+        return '<?php
+class FibonacciSequenceTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var FibonacciSequence
+     */
+    private $class;
+
+    public function setUp()
+    {
+        $this->class = new \FibonacciSequence();
+    }
+
+    public function testFirstNumberShouldBeZero()
+    {
+        $this->assertSame(0, $this->class->getNumber());
+    }
+}';
     }
 }

@@ -7,7 +7,7 @@ Feature:
     Given I have the following configuration:
       """
       php_kata:
-        src_path: src
+        src_path: vfs://src
         katas:
           assert-true:
             class: Star\Kata\Data\FibonacciKata
@@ -31,21 +31,24 @@ Feature:
     """
     And I should have a file 'FibonacciSequenceTest.php' with content:
     """
-      <?php
-      class FibonacciSequenceTest extends \PHPUnit_Framework_TestCase
-      {
-          private $class;
+    <?php
+    class FibonacciSequenceTest extends \PHPUnit_Framework_TestCase
+    {
+        /**
+         * @var FibonacciSequence
+         */
+        private $class;
 
-          public function setUp()
-          {
-              $this->class = new \FibonacciSequence();
-          }
+        public function setUp()
+        {
+            $this->class = new \FibonacciSequence();
+        }
 
-          public function testFirstNumberShouldBeZero()
-          {
-              $this->assertSame(0, $this->class->getNumber());
-          }
-      }
+        public function testFirstNumberShouldBeZero()
+        {
+            $this->assertSame(0, $this->class->getNumber());
+        }
+    }
     """
 #
 #  Scenario: Compute failed objectives
