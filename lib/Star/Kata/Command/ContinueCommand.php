@@ -15,13 +15,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class EndCommand
+ * Class ContinueCommand
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Command
  */
-class EndCommand extends Command
+class ContinueCommand extends Command
 {
     /**
      * @var Configuration
@@ -33,7 +33,7 @@ class EndCommand extends Command
      */
     public function __construct(Configuration $configuration)
     {
-        parent::__construct('end');
+        parent::__construct('continue');
         $this->configuration = $configuration;
     }
 
@@ -68,12 +68,12 @@ class EndCommand extends Command
             $kata = $this->configuration->getKata($kata);
 
             $output->writeln('<info>' . $kata->getDescription() . '</info>');
-            $success = $kata->end();
-
-            if ($success) {
-                $output->writeln('    <comment>Objective completed.</comment>');
+            $result = $kata->end();
+var_dump($result);
+            if ($result->isSuccess()) {
+                $output->writeln('    <comment>Objective completed: ' . $result->getPoints() . ' points.</comment>');
             } else {
-                $output->writeln('    <error>Objective failed.</error>');
+                $output->writeln('    <error>Objective failed with ' . $result->getPoints() . ' points</error>');
             }
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');

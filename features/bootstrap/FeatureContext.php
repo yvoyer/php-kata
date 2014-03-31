@@ -23,9 +23,9 @@ namespace {
     class FeatureContext extends BehatContext
     {
         /**
-         * @var KataApplication
+         * @var ApplicationTester
          */
-        private $application;
+        private $applicationTester;
 
         /**
          * @var Configuration
@@ -50,6 +50,10 @@ namespace {
         {
             $this->config = new Configuration();
             $this->config->load(Yaml::parse($string));
+            $application = new KataApplication($this->config);
+            $application->setAutoExit(false);
+
+            $this->applicationTester = new ApplicationTester($application);
         }
 
         /**
@@ -58,7 +62,7 @@ namespace {
         public function theFolderIsEmpty($sourceFolder)
         {
             $expected = array($sourceFolder => array());
-            $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+            $structure = $this->getStructure();
             assertSame($expected, $structure);
         }
 
@@ -67,15 +71,8 @@ namespace {
          */
         public function iLaunchTheCommand(TableNode $table)
         {
-            $input = $table->getHash();
-            $input = $input[0];
-
-            $this->application = new KataApplication($this->config);
-            $this->application->setAutoExit(false);
-
-            $tester = new ApplicationTester($this->application);
-            if ($tester->run($input)) {
-                var_dump($tester->getDisplay());die("\n\n\nERROR\n\n\n");
+            foreach ($table->getHash() as $input) {
+                $this->executeCommand($input);
             }
         }
 
@@ -84,7 +81,7 @@ namespace {
          */
         public function iShouldHaveAFileWithContent($filename, PyStringNode $content)
         {
-            $structure = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+            $structure = $this->getStructure();
 
             assertArrayHasKey('src', $structure, 'The src folder should be present');
             assertArrayHasKey($filename, $structure['src'], 'The file should be present');
@@ -92,11 +89,20 @@ namespace {
         }
 
         /**
+         * @Given /^The kata \'([^\']*)\' is started$/
+         */
+        public function theKataIsStarted($kata)
+        {
+            $this->executeCommand(array('command' => 'start', 'kata' => $kata));
+        }
+
+        /**
          * @Given /^The file \'([^\']*)\' contains:$/
          */
         public function theFileContains($filename, PyStringNode $string)
         {
-            throw new PendingException();
+            file_put_contents(vfsStream::url('src') . '/' . $filename, $string->getRaw());
+            require_once(vfsStream::url('src') . '/' . $filename);
         }
 
         /**
@@ -104,7 +110,7 @@ namespace {
          */
         public function theUserShouldHavePoints($points)
         {
-            throw new PendingException();
+            assertContains($points . ' points', $this->applicationTester->getDisplay());
         }
 
         /**
@@ -121,6 +127,26 @@ namespace {
         public function theObjectivesShouldBeSuccessful()
         {
             throw new PendingException();
+        }
+
+        /**
+         *
+         * @return mixed
+         */
+        private function getStructure()
+        {
+            return vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
+        }
+
+        /**
+         * @param $input
+         */
+        private function executeCommand($input)
+        {
+            if ($this->applicationTester->run($input)) {
+                var_dump($this->applicationTester->getDisplay());
+                die("\n\n\nERROR\n\n\n");
+            }
         }
     }
 }

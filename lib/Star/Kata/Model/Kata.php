@@ -10,6 +10,7 @@ namespace Star\Kata\Model;
 use Star\Component\Collection\TypedCollection;
 use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\RuntimeException;
+use Star\Kata\Model\Objective\TestObjective;
 use Star\Kata\Model\Step\Step;
 
 /**
@@ -88,23 +89,28 @@ class Kata
         }
     }
 
+    /**
+     * @return Objective\ObjectiveResult
+     */
     public function end()
     {
 //        if ($this->steps->isEmpty()) {
 //            throw new RuntimeException('Should have at least one step');
 //        }
         // todo check that the kata is initialized
+        $class = '\FibonacciSequenceTest';
+        $objective = new TestObjective('', new $class());
 
-        $suite = new \PHPUnit_Framework_TestSuite();
-        foreach ($this->steps as $step) {
-            $class = $step->getTestClass();
-            $case = $step->getTestCase();
+//        $suite = new \PHPUnit_Framework_TestSuite();
+//        foreach ($this->steps as $step) {
+//            $class = $step->getTestClass();
+//            $case = $step->getTestCase();
+//
+//            $suite->addTest(new $class($case));
+//        }
+//        $result = $suite->run();
 
-            $suite->addTest(new $class($case));
-        }
-        $result = $suite->run();
-
-        return $result->wasSuccessful();
+        return $objective->validate();
     }
 
     /**

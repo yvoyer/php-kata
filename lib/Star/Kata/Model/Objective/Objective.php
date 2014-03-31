@@ -16,5 +16,18 @@ namespace Star\Kata\Model\Objective;
  */
 interface Objective
 {
+    /**
+     * Validate the Objective.
+     *
+     * @return ObjectiveResult
+     */
+    public function validate();
+
+    /**
+     * The name of the objective.
+     *
+     * @return string
+     */
+    public function getName();
 }
  

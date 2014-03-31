@@ -50,24 +50,38 @@ Feature:
         }
     }
     """
-#
-#  Scenario: Compute failed objectives
-#    Given The file 'FibonacciSequence.php' contains:
-#      """
-#      <?php
-#      class FibonacciSequence
-#      {
-#          public function getNumber()
-#          {
-#          }
-#      }
-#      """
-#    When I launch the command:
-#      | command | kata      |
-#      | stop    | fibonacci |
-#    Then The user should have 0 points
-#    And The Objectives should be failed
-#
+
+  Scenario: Compute failed objectives
+    Given The kata 'fibonacci' is started
+    And The file 'FibonacciSequence.php' contains:
+    """
+      <?php
+      class FibonacciSequence
+      {
+          public function getNumber()
+          {
+              return -1;
+          }
+      }
+      """
+    And The file 'FibonacciSequenceTest.php' contains:
+    """
+    <?php
+    class FibonacciSequenceTest extends \PHPUnit_Framework_TestCase
+    {
+        public function testFirstNumberShouldBeZero()
+        {
+            $class = new \FibonacciSequence();
+            $this->assertSame(0, $class->getNumber());
+        }
+    }
+      """
+    When I launch the command:
+      | command  | kata      |
+      | continue | fibonacci |
+    Then The user should have 0 points
+    And The Objectives should be failed
+
 #  Scenario: Compute successful objectives
 #    Given The file 'FibonacciSequence.php' contains:
 #    """
