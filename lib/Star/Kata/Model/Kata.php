@@ -83,10 +83,16 @@ class Kata
             throw new RuntimeException('Should have at least one step');
         }
 
+        if ($this->isInitialized()) {
+            return false;
+        }
+
         // todo check that the kata is initialized
         foreach ($this->steps as $step) {
             $step->init();
         }
+
+        return true;
     }
 
     /**

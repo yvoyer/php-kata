@@ -6,6 +6,8 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\RuntimeException;
+use Star\Kata\Model\Kata;
+use Star\Kata\Model\Step\Step;
 
 class KataSpec extends ObjectBehavior
 {
@@ -37,5 +39,23 @@ class KataSpec extends ObjectBehavior
     function it_has_a_description()
     {
         $this->getDescription()->shouldReturn('');
+    }
+
+    function it_starts_the_kata(Step $step)
+    {
+        $step->init()->shouldBeCalled();
+        $step->isInitialized()->willReturn(false);
+        $this->addStep($step);
+
+        $this->start()->shouldReturn(true);
+    }
+
+    function it_does_no_starts_the_kata_when_already_started(Step $step)
+    {
+        $step->init()->shouldNotBeCalled();
+        $step->isInitialized()->willReturn(true);
+        $this->addStep($step);
+
+        $this->start()->shouldReturn(false);
     }
 }

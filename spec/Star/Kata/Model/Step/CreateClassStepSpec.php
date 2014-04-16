@@ -67,4 +67,15 @@ CONTENT;
 
         assertEquals($expectedPaths, $actualPaths, 'Structure is not valid');
     }
+
+    function it_is_initialized_when_file_exists()
+    {
+        $this->init();
+        $this->isInitialized()->shouldReturn(true);
+    }
+
+    function it_is_not_initialized_when_file_not_present()
+    {
+        $this->isInitialized()->shouldReturn(false);
+    }
 }
