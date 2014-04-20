@@ -9,6 +9,7 @@ namespace Star\Kata\Command;
 
 use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\Exception;
+use Star\Kata\Model\KataCollection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,17 +25,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ContinueCommand extends Command
 {
     /**
-     * @var Configuration
+     * @var KataCollection
      */
-    private $configuration;
+    private $collection;
 
     /**
-     * @param Configuration $configuration
+     * @param KataCollection $collection
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(KataCollection $collection)
     {
         parent::__construct('continue');
-        $this->configuration = $configuration;
+        $this->collection = $collection;
     }
 
     public function configure()
@@ -65,11 +66,11 @@ class ContinueCommand extends Command
                 throw new \RuntimeException('Kata must be supplied.');
             }
 
-            $kata = $this->configuration->getKata($kata);
+            $kata = $this->collection->getKata($kata);
 
             $output->writeln('<info>' . $kata->getDescription() . '</info>');
             $result = $kata->end();
-var_dump($result);
+
             if ($result->isSuccess()) {
                 $output->writeln('    <comment>Objective completed: ' . $result->getPoints() . ' points.</comment>');
             } else {

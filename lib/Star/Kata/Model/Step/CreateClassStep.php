@@ -8,7 +8,9 @@
 namespace Star\Kata\Model\Step;
 
 use Star\Kata\Configuration\Configuration;
+use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\Model\ClassTemplate;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class CreateClassStep
@@ -20,14 +22,9 @@ use Star\Kata\Model\ClassTemplate;
 class CreateClassStep implements Step
 {
     /**
-     * @var string
+     * @var ClassGenerator
      */
-    private $root;
-
-    /**
-     * @var string
-     */
-    private $class;
+    private $generator;
 
     /**
      * @var ClassTemplate
@@ -35,67 +32,18 @@ class CreateClassStep implements Step
     private $template;
 
     /**
-     * @param string $path
-     * @param \Star\Kata\Model\ClassTemplate $template
+     * @param ClassGenerator $classGenerator
+     * @param ClassTemplate  $template
      */
-    public function __construct($path, ClassTemplate $template)
+    public function __construct(ClassGenerator $classGenerator, ClassTemplate $template)
     {
-        $this->root = $path;
-        $this->class = $template->getClassName() . '.php';
+        $this->generator = $classGenerator;
         $this->template = $template;
     }
 
     public function init()
     {
-        $basePath = $this->root;
-        foreach ($this->getFolders() as $folder) {
-            $basePath .= DIRECTORY_SEPARATOR . $folder;
-            $this->createFolder($basePath);
-        }
-
-        $basePath .= DIRECTORY_SEPARATOR . $this->getFileName();
-        if (false === file_exists($basePath)) {
-            file_put_contents($basePath, $this->template->getContent());
-        }
-    }
-
-    /**
-     * @return array
-     */
-    private function getFolders()
-    {
-        $folders = explode('\\', $this->class);
-        array_pop($folders);
-
-        return $folders;
-    }
-
-    /**
-     * @return string
-     */
-    private function getFileName()
-    {
-        $folders = explode('\\', $this->class);
-
-        return array_pop($folders);
-    }
-
-    /**
-     * @return string
-     */
-    private function getFullClassName()
-    {
-        return str_replace('.php', '', $this->class);
-    }
-
-    /**
-     * @param string $path
-     */
-    private function createFolder($path)
-    {
-        if (false === is_dir($path)) {
-            mkdir($path);
-        }
+        $this->generator->generate($this->template->getClassName());
     }
 
     /**
@@ -123,6 +71,6 @@ class CreateClassStep implements Step
      */
     public function isInitialized()
     {
-        throw new \RuntimeException('Method ' . __CLASS__ . '::isInitialized() not implemented yet.');
+        return class_exists($this->template->getClassName());
     }
 }

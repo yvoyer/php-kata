@@ -2,48 +2,29 @@
 
 namespace spec\Star\Kata\Model\Step;
 
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
-use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Star\Kata\Configuration\Configuration;
+use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\Model\ClassTemplate;
 
 class CreateClassStepSpec extends ObjectBehavior
 {
     /**
-     * @var VfsStreamDirectory
+     * @var ClassGenerator
      */
-    private $root;
+    private $generator;
 
     /**
      * @var ClassTemplate
      */
     private $template;
 
-    /**
-     * @var string
-     */
-    private $content;
-
-    function let(ClassTemplate $template)
+    function let(ClassGenerator $generator, ClassTemplate $template)
     {
+        $this->generator = $generator;
         $this->template = $template;
-        $this->root = vfsStream::setup('src');
-        $this->template->getClassName()->willReturn('Path\To\CreateClass');
-        $this->content = <<<CONTENT
-<?php
 
-namespace Path\To;
-
-class CreateClass
-{
-}
-CONTENT;
-
-        $this->template->getContent()->willReturn($this->content);
-        $this->beConstructedWith(vfsStream::url('src'), $this->template);
+        $this->beConstructedWith($this->generator, $this->template);
     }
 
     function it_is_initializable()
@@ -58,24 +39,23 @@ CONTENT;
 
     function  it_create_a_file()
     {
-        assertFalse($this->root->hasChild('src/Path/To/CreateClass.php'), 'Should not have the file');
+        $this->template->getClassName()->willReturn('ClassName');
+        $this->generator->generate('ClassName');
+
         $this->init();
-        assertTrue($this->root->hasChild('src/Path/To/CreateClass.php'), 'Should create class file');
-
-        $expectedPaths = array('src' => array('Path' => array('To' => array('CreateClass.php' => $this->content))));
-        $actualPaths = vfsStream::inspect(new vfsStreamStructureVisitor())->getStructure();
-
-        assertEquals($expectedPaths, $actualPaths, 'Structure is not valid');
     }
 
     function it_is_initialized_when_file_exists()
     {
-        $this->init();
-        $this->isInitialized()->shouldReturn(true);
+        $this->template->getClassName()->willReturn(__NAMESPACE__ . '\CreateClassStepSpec');
+
+        $this->shouldBeInitialized();
     }
 
     function it_is_not_initialized_when_file_not_present()
     {
-        $this->isInitialized()->shouldReturn(false);
+        $this->template->getClassName()->willReturn('SomeNotExistingClass');
+
+        $this->shouldNotBeInitialized();
     }
 }

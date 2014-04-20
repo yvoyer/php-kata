@@ -7,12 +7,10 @@
 
 namespace Star\Kata\Data;
 
-use Star\Kata\Configuration\Configuration;
-use Star\Kata\Model\ClassTemplate;
+use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\Model\FileTemplate;
 use Star\Kata\Model\Kata;
 use Star\Kata\Model\Step\CreateClassStep;
-use Star\Kata\Model\Step\TestStep;
 
 /**
  * Class FibonacciKata
@@ -23,22 +21,20 @@ use Star\Kata\Model\Step\TestStep;
  */
 class FibonacciKata extends Kata
 {
-    /**
-     * @param Configuration $config
-     */
-    protected function configure(Configuration $config)
+    protected function configure()
     {
         $this->setName('fibonacci');
+        $classGenerator = new ClassGenerator();
 
         $this->addStep(
             new CreateClassStep(
-                $config->getSrcPath(),
+                $classGenerator,
                 new FileTemplate('FibonacciSequence', $this->getSystemUnderTestContent())
             )
         );
         $this->addStep(
             new CreateClassStep(
-                $config->getSrcPath(),
+                $classGenerator,
                 new FileTemplate('FibonacciSequenceTest', $this->getTestContent())
             )
         );

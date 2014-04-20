@@ -1,7 +1,0 @@
-php-kata:
-    src-path: src
-    katas:
-        fibonacci:
-            class: Star\Kata\Data\FibonacciKata
-            name: fibonacci
-           # steps:

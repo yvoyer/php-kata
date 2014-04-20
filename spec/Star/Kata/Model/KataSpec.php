@@ -4,16 +4,15 @@ namespace spec\Star\Kata\Model;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Kata;
 use Star\Kata\Model\Step\Step;
 
 class KataSpec extends ObjectBehavior
 {
-    function let(Configuration $config)
+    function let()
     {
-        $this->beConstructedWith($config, 'kata-name');
+        $this->beConstructedWith('kata-name');
     }
 
     function it_is_initializable()
@@ -31,9 +30,9 @@ class KataSpec extends ObjectBehavior
         $this->shouldThrow(new RuntimeException('Should have at least one step'))->duringStart();
     }
 
-    function it_throw_exception_when_no_name_configured(Configuration $config)
+    function it_throw_exception_when_no_name_configured()
     {
-        $this->shouldThrow(new RuntimeException('Name should be configured.'))->during__construct($config);
+        $this->shouldThrow(new RuntimeException('Name should be configured.'))->during__construct();
     }
 
     function it_has_a_description()

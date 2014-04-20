@@ -9,11 +9,9 @@
 namespace {
     require_once 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-    use Star\Kata\Configuration\YamlLoader;
     use Star\Kata\KataApplication;
     use Symfony\Component\Console\Input\ArgvInput;
 
-    $loader = new YamlLoader();
-    $application = new KataApplication($loader->load('kata' . DIRECTORY_SEPARATOR . 'php-kata.yml'));
+    $application = new KataApplication();
     $application->run(new ArgvInput($argv));
 }

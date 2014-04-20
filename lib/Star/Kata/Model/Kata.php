@@ -42,12 +42,12 @@ class Kata
     /**
      * @param string $name
      */
-    public function __construct(Configuration $config, $name = '')
+    public function __construct($name = '')
     {
         $this->name = $name;
         $this->steps = new TypedCollection(Step::INTERFACE_NAME);
 
-        $this->configure($config);
+        $this->configure();
         if (empty($this->name)) {
             throw new RuntimeException('Name should be configured.');
         }
@@ -55,11 +55,10 @@ class Kata
 
     /**
      * Configure the kata.
-     *
-     * @param Configuration $config
      */
-    protected function configure(Configuration $config)
+    protected function configure()
     {
+        // todo throw ex
     }
 
     private function isInitialized()

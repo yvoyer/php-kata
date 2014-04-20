@@ -3,7 +3,7 @@
     "description": "Programming Kata for PHP",
     "autoload": {
         "psr-0": {
-            "": ["lib", "tests", "kata", "src"]
+            "": ["lib", "tests", "kata", "src", ""]
         },
         "files": [
             "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"
