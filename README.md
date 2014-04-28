@@ -1,6 +1,8 @@
 php-kata
 ========
 
+[![Build Status](https://travis-ci.org/yvoyer/php-kata.svg?branch=master)](https://travis-ci.org/yvoyer/php-kata)
+
 Command line tool to do php katas.
 
 todo

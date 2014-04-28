@@ -8,7 +8,6 @@
 namespace Star\Kata\Model;
 
 use Star\Component\Collection\TypedCollection;
-use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Objective\TestObjective;
 use Star\Kata\Model\Step\Step;
@@ -40,14 +39,23 @@ class Kata
     private $description = '';
 
     /**
-     * @param string $name
+     * @var string
      */
-    public function __construct(Configuration $config, $name = '')
+    private $srcPath;
+
+    /**
+     * @param string $srcPath
+     * @param string $name
+     *
+     * @throws \Star\Kata\Exception\RuntimeException
+     */
+    public function __construct($srcPath, $name = '')
     {
         $this->name = $name;
         $this->steps = new TypedCollection(Step::INTERFACE_NAME);
+        $this->srcPath = $srcPath;
 
-        $this->configure($config);
+        $this->configure();
         if (empty($this->name)) {
             throw new RuntimeException('Name should be configured.');
         }
@@ -55,10 +63,8 @@ class Kata
 
     /**
      * Configure the kata.
-     *
-     * @param Configuration $config
      */
-    protected function configure(Configuration $config)
+    protected function configure()
     {
     }
 
@@ -83,10 +89,15 @@ class Kata
             throw new RuntimeException('Should have at least one step');
         }
 
-        // todo check that the kata is initialized
+        if ($this->isInitialized()) {
+            throw new RuntimeException('The kata is already initialized.');
+        }
+
         foreach ($this->steps as $step) {
             $step->init();
         }
+
+        return true;
     }
 
     /**
@@ -153,5 +164,13 @@ class Kata
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSrcPath()
+    {
+        return $this->srcPath;
     }
 }

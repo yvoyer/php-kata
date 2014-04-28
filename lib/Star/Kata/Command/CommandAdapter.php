@@ -9,39 +9,40 @@ namespace Star\Kata\Command;
 
 use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\Exception;
-use Star\Kata\Model\KataCollection;
+use Star\Kata\Model\Kata;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class StartCommand
+ * Class CommandAdapter
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Command
  */
-class StartCommand extends Command
+class CommandAdapter extends Command
 {
     /**
-     * @var KataCollection
+     * @var \Star\Kata\Model\Kata
      */
-    private $collection;
+    private $kata;
 
     /**
-     * @param KataCollection $collection
+     * @param Kata $kata
      */
-    public function __construct(KataCollection $collection)
+    public function __construct(Kata $kata)
     {
-        parent::__construct('start');
-        $this->collection = $collection;
+        $this->kata = $kata;
+        parent::__construct($this->kata->getName());
     }
 
     public function configure()
     {
-        $this->addArgument('kata', InputArgument::REQUIRED, 'Name of kata');
-        $this->setDescription('Start the specified kata.');
+        $this->addOption('start', 's', InputOption::VALUE_NONE, 'Start the kata');
+        $this->setDescription($this->kata->getDescription());
     }
 
     /**
@@ -61,18 +62,11 @@ class StartCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $kataName = $input->getArgument('kata');
-            if (empty($kataName)) {
-                throw new \RuntimeException('Kata must be supplied.');
-            }
+            $output->writeln('<info>' . $this->kata->getDescription() . '</info>');
 
-            $kata = $this->collection->getKata($kataName);
-            if (null === $kata) {
-                throw new \RuntimeException("The '{$kataName}' kata was not found.");
+            if ($input->getOption('start')) {
+                $this->kata->start();
             }
-
-            $kata->start();
-            $output->writeln('<info>' . $kata->getDescription() . '</info>');
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
             return 1;

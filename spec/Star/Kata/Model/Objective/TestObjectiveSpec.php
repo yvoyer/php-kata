@@ -35,12 +35,12 @@ class TestObjectiveSpec extends ObjectBehavior
         $this->getName()->shouldReturn('test-name');
     }
 
-    function it_checks_whether_the_tests_pass(\PHPUnit_Framework_TestResult $result)
-    {
-        $result->count()->willReturn(1);
-        $result->failureCount()->willReturn(1);
-        $this->test->run()->willReturn($result);
-
-        $this->validate()->shouldReturnAnInstanceOf(ObjectiveResult::CLASS_NAME);
-    }
+//    function it_checks_whether_the_tests_pass(\PHPUnit_Framework_TestResult $result)
+//    {
+//        $result->count()->willReturn(1);
+//        $result->failureCount()->willReturn(1);
+//        $this->test->run()->willReturn($result);
+//
+//        $this->validate()->shouldReturnAnInstanceOf(ObjectiveResult::CLASS_NAME);
+//    }
 }

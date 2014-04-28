@@ -4,15 +4,13 @@ namespace spec\Star\Kata\Data;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Star\Kata\Configuration\Configuration;
-use Star\Kata\Model\ClassTemplate;
 use Star\Kata\Model\Kata;
 
 class FibonacciKataSpec extends ObjectBehavior
 {
-    function let(Configuration $config)
+    function let()
     {
-        $this->beConstructedWith($config);
+        $this->beConstructedWith(__DIR__);
     }
 
     function it_is_initializable()

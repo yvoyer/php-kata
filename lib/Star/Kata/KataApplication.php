@@ -10,6 +10,8 @@ namespace Star\Kata;
 use Star\Kata\Command\ContinueCommand;
 use Star\Kata\Command\StartCommand;
 use Star\Kata\Configuration\Configuration;
+use Star\Kata\Data\FibonacciKata;
+use Star\Kata\Model\KataCollection;
 use Symfony\Component\Console\Application;
 
 /**
@@ -26,18 +28,27 @@ class KataApplication extends Application
     /**
      * @var string
      */
-    private $root;
+    private $srcPath;
+
+    public function __construct($srcPath)
+    {
+        parent::__construct('phpkata', self::VERSION);
+        $this->srcPath = $srcPath;
+
+        $collection = $this->getDefaultKatas();
+        $this->add(new StartCommand($collection));
+        $this->add(new ContinueCommand($collection));
+    }
 
     /**
-     * @param Configuration $configuration
+     * @return KataCollection
      */
-    public function __construct(Configuration $configuration)
+    protected function getDefaultKatas()
     {
-        $this->root = $configuration->getSrcPath();
+        $collection = new KataCollection();
+        $collection->addKata(new FibonacciKata($this->srcPath));
 
-        parent::__construct('phpkata', self::VERSION);
-        $this->add(new StartCommand($configuration));
-        $this->add(new ContinueCommand($configuration));
+        return $collection;
     }
 }
  
