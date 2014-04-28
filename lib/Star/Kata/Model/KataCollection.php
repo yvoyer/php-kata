@@ -39,11 +39,10 @@ class KataCollection
     }
 
     /**
-     * @param string $name
-     * @param Kata   $kata
+     * @param Kata $kata
      */
-    public function addKata($name, Kata $kata)
+    public function addKata(Kata $kata)
     {
-        $this->katas[$name] = $kata;
+        $this->katas[$kata->getName()] = $kata;
     }
 }

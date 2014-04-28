@@ -12,6 +12,6 @@ namespace {
     use Star\Kata\KataApplication;
     use Symfony\Component\Console\Input\ArgvInput;
 
-    $application = new KataApplication();
+    $application = new KataApplication(__DIR__ . DIRECTORY_SEPARATOR . 'src');
     $application->run(new ArgvInput($argv));
 }

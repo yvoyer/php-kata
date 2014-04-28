@@ -8,6 +8,11 @@ use Star\Kata\Model\Kata;
 
 class FibonacciKataSpec extends ObjectBehavior
 {
+    function let()
+    {
+        $this->beConstructedWith(__DIR__);
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Star\Kata\Data\FibonacciKata');

@@ -61,14 +61,17 @@ class StartCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $kata = $input->getArgument('kata');
-            if (empty($kata)) {
+            $kataName = $input->getArgument('kata');
+            if (empty($kataName)) {
                 throw new \RuntimeException('Kata must be supplied.');
             }
 
-            $kata = $this->collection->getKata($kata);
-            $kata->start();
+            $kata = $this->collection->getKata($kataName);
+            if (null === $kata) {
+                throw new \RuntimeException("The '{$kataName}' kata was not found.");
+            }
 
+            $kata->start();
             $output->writeln('<info>' . $kata->getDescription() . '</info>');
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');

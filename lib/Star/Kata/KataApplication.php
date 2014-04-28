@@ -28,11 +28,12 @@ class KataApplication extends Application
     /**
      * @var string
      */
-    private $root;
+    private $srcPath;
 
-    public function __construct()
+    public function __construct($srcPath)
     {
         parent::__construct('phpkata', self::VERSION);
+        $this->srcPath = $srcPath;
 
         $collection = $this->getDefaultKatas();
         $this->add(new StartCommand($collection));
@@ -45,7 +46,7 @@ class KataApplication extends Application
     protected function getDefaultKatas()
     {
         $collection = new KataCollection();
-        $collection->addKata('fibonnaci', new FibonacciKata());
+        $collection->addKata(new FibonacciKata($this->srcPath));
 
         return $collection;
     }

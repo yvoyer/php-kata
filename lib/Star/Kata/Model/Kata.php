@@ -8,7 +8,6 @@
 namespace Star\Kata\Model;
 
 use Star\Component\Collection\TypedCollection;
-use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Objective\TestObjective;
 use Star\Kata\Model\Step\Step;
@@ -40,12 +39,21 @@ class Kata
     private $description = '';
 
     /**
-     * @param string $name
+     * @var string
      */
-    public function __construct($name = '')
+    private $srcPath;
+
+    /**
+     * @param string $srcPath
+     * @param string $name
+     *
+     * @throws \Star\Kata\Exception\RuntimeException
+     */
+    public function __construct($srcPath, $name = '')
     {
         $this->name = $name;
         $this->steps = new TypedCollection(Step::INTERFACE_NAME);
+        $this->srcPath = $srcPath;
 
         $this->configure();
         if (empty($this->name)) {
@@ -58,7 +66,6 @@ class Kata
      */
     protected function configure()
     {
-        // todo throw ex
     }
 
     private function isInitialized()
@@ -83,10 +90,9 @@ class Kata
         }
 
         if ($this->isInitialized()) {
-            return false;
+            throw new RuntimeException('The kata is already initialized.');
         }
 
-        // todo check that the kata is initialized
         foreach ($this->steps as $step) {
             $step->init();
         }
@@ -158,5 +164,13 @@ class Kata
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSrcPath()
+    {
+        return $this->srcPath;
     }
 }

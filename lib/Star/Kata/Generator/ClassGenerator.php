@@ -33,7 +33,7 @@ class ClassGenerator
     /**
      * @param string $srcPath
      */
-    public function __construct($srcPath = 'src')
+    public function __construct($srcPath)
     {
         $this->generator = new PhpSpecClassGenerator(new IOAdapter(), new TemplateRenderer());
         $this->locator = new PSR0Locator('', 'spec', $srcPath);

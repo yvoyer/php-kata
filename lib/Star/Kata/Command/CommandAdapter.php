@@ -65,7 +65,7 @@ class CommandAdapter extends Command
             $output->writeln('<info>' . $this->kata->getDescription() . '</info>');
 
             if ($input->getOption('start')) {
-                var_dump($this->kata->start());
+                $this->kata->start();
             }
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');

@@ -12,7 +12,7 @@ class KataSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('kata-name');
+        $this->beConstructedWith(__DIR__, 'kata-name');
     }
 
     function it_is_initializable()
@@ -32,7 +32,7 @@ class KataSpec extends ObjectBehavior
 
     function it_throw_exception_when_no_name_configured()
     {
-        $this->shouldThrow(new RuntimeException('Name should be configured.'))->during__construct();
+        $this->shouldThrow(new RuntimeException('Name should be configured.'))->during__construct(__DIR__);
     }
 
     function it_has_a_description()
@@ -55,6 +55,6 @@ class KataSpec extends ObjectBehavior
         $step->isInitialized()->willReturn(true);
         $this->addStep($step);
 
-        $this->start()->shouldReturn(false);
+        $this->shouldThrow(new RuntimeException('The kata is already initialized.'))->duringStart();
     }
 }
