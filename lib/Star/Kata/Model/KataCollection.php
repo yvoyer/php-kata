@@ -23,9 +23,13 @@ class KataCollection
      */
     private $katas;
 
-    public function __construct()
+    /**
+     * @param Kata[] $katas
+     */
+    public function __construct(array $katas = array())
     {
         $this->katas = new TypedCollection(Kata::CLASS_NAME);
+        $this->addKatas($katas);
     }
 
     /**
@@ -39,10 +43,30 @@ class KataCollection
     }
 
     /**
+     * @param Kata[] $elements
+     */
+    private function addKatas(array $elements)
+    {
+        foreach ($elements as $element) {
+            $this->addKata($element);
+        }
+    }
+
+    /**
      * @param Kata $kata
      */
     public function addKata(Kata $kata)
     {
         $this->katas[$kata->getName()] = $kata;
+    }
+
+    /**
+     * Return the number of elements.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->katas);
     }
 }
