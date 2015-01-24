@@ -4,12 +4,12 @@ Feature:
   I need to write code based on objectives
 
   Background:
-    Given The kata's name is 'assert-true'
-    And The test requirement's code for 'assert-true' kata should be
+    Given The kata name is 'assert-true'
+    And The test requirement code for 'assert-true' kata should be
     """
     $this->assertTrue(assert-true());
     """
-    And The 'assert-true' kata's objective is "Assert that a function named 'assert-true()' always returns true."
+    And The 'assert-true' kata objective is "Assert that a function named 'assert-true()' always returns true."
 
   Scenario: User starts the kata
     Given the kata 'assert-true' was never started
