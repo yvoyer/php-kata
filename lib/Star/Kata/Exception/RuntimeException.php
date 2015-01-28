@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -14,7 +14,6 @@ namespace Star\Kata\Exception;
  *
  * @package Star\Kata\Exception
  */
-class RuntimeException extends Exception
+class RuntimeException extends \Exception implements Exception
 {
 }
- 

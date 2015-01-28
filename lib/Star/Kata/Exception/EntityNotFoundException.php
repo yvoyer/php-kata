@@ -8,14 +8,12 @@
 namespace Star\Kata\Exception;
 
 /**
- * Class Exception
+ * Class EntityNotFoundException
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Exception
- *
- * Base exception for the package.
  */
-interface Exception
+class EntityNotFoundException extends RuntimeException
 {
 }

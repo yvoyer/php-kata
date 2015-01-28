@@ -8,14 +8,12 @@
 namespace Star\Kata\Exception;
 
 /**
- * Class Exception
+ * Class ServiceNotFoundException
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Exception
- *
- * Base exception for the package.
  */
-interface Exception
+class ServiceNotFoundException extends \Exception implements Exception
 {
 }

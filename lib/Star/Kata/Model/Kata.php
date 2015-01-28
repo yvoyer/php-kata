@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -71,7 +71,7 @@ class Kata
     private function isInitialized()
     {
         foreach ($this->steps as $step) {
-            if (false === $step->isInitialized()) {
+            if (! $step->isInitialized()) {
                 return false;
             }
         }
@@ -80,7 +80,7 @@ class Kata
     }
 
     /**
-     * @return bool
+     * @return StartedKata
      * @throws \Star\Kata\Exception\RuntimeException
      */
     public function start()
@@ -97,7 +97,7 @@ class Kata
             $step->init();
         }
 
-        return true;
+        return new StartedKata($this);
     }
 
     /**

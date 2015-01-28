@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -66,7 +66,7 @@ class ContinueCommand extends Command
                 throw new \RuntimeException('Kata must be supplied.');
             }
 
-            $kata = $this->collection->getKata($kata);
+            $kata = $this->collection->findOneByName($kata);
 
             $output->writeln('<info>' . $kata->getDescription() . '</info>');
             $result = $kata->end();
@@ -84,4 +84,3 @@ class ContinueCommand extends Command
         return 0;
     }
 }
- 
