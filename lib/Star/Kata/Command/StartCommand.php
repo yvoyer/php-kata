@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -9,6 +9,7 @@ namespace Star\Kata\Command;
 
 use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\Exception;
+use Star\Kata\KataDomain\KataService;
 use Star\Kata\Model\KataCollection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -25,17 +26,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 class StartCommand extends Command
 {
     /**
-     * @var KataCollection
+     * @var KataService
      */
-    private $collection;
+    private $service;
 
     /**
-     * @param KataCollection $collection
+     * @param KataService $service
      */
-    public function __construct(KataCollection $collection)
+    public function __construct(KataService $service)
     {
         parent::__construct('start');
-        $this->collection = $collection;
+        $this->service = $service;
     }
 
     public function configure()
@@ -60,18 +61,11 @@ class StartCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $kataName = $input->getArgument('kata');
+
         try {
-            $kataName = $input->getArgument('kata');
-            if (empty($kataName)) {
-                throw new \RuntimeException('Kata must be supplied.');
-            }
+            $kata = $this->service->startKata($kataName);
 
-            $kata = $this->collection->getKata($kataName);
-            if (null === $kata) {
-                throw new \RuntimeException("The '{$kataName}' kata was not found.");
-            }
-
-            $kata->start();
             $output->writeln('<info>' . $kata->getDescription() . '</info>');
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
@@ -81,4 +75,3 @@ class StartCommand extends Command
         return 0;
     }
 }
- 

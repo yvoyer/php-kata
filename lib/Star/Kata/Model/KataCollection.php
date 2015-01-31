@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -16,8 +16,10 @@ use Star\Component\Collection\TypedCollection;
  *
  * @package Star\Kata\Model
  */
-class KataCollection
+class KataCollection implements KataRepository
 {
+    const CLASS_NAME = __CLASS__;
+
     /**
      * @var TypedCollection|Kata[]
      */
@@ -37,7 +39,7 @@ class KataCollection
      *
      * @return Kata
      */
-    public function getKata($name)
+    public function findOneByName($name)
     {
         return $this->katas[$name];
     }

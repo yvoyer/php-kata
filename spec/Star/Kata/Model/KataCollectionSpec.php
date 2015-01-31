@@ -23,7 +23,7 @@ class KataCollectionSpec extends ObjectBehavior
         $kata->getName()->willReturn('stub');
 
         $this->addKata($kata);
-        $this->getKata('stub')->shouldReturnAnInstanceOf(Kata::CLASS_NAME);
+        $this->findOneByName('stub')->shouldReturnAnInstanceOf(Kata::CLASS_NAME);
     }
 
     function it_can_be_constructed_with_katas(Kata $kata)

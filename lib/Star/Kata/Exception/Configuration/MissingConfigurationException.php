@@ -1,11 +1,13 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
 namespace Star\Kata\Exception\Configuration;
+
+use Star\Kata\Exception\Exception;
 
 /**
  * Class MissingConfigurationException
@@ -14,7 +16,7 @@ namespace Star\Kata\Exception\Configuration;
  *
  * @package Star\Kata\Exception\Configuration
  */
-class MissingConfigurationException extends \Exception
+class MissingConfigurationException extends \Exception implements Exception
 {
     /**
      * @return MissingConfigurationException
@@ -24,4 +26,3 @@ class MissingConfigurationException extends \Exception
         return new self("More than 1 katas must be defined.");
     }
 }
- 

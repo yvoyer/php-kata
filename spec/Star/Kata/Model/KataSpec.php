@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Kata;
+use Star\Kata\Model\StartedKata;
 use Star\Kata\Model\Step\Step;
 
 class KataSpec extends ObjectBehavior
@@ -46,7 +47,7 @@ class KataSpec extends ObjectBehavior
         $step->isInitialized()->willReturn(false);
         $this->addStep($step);
 
-        $this->start()->shouldReturn(true);
+        $this->start()->shouldReturnAnInstanceOf(StartedKata::CLASS_NAME);
     }
 
     function it_does_no_starts_the_kata_when_already_started(Step $step)
