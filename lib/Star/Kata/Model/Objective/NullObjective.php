@@ -8,28 +8,31 @@
 namespace Star\Kata\Model\Objective;
 
 /**
- * Class Objective
+ * Class NullObjective
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Model\Objective
  */
-interface Objective
+final class NullObjective implements Objective
 {
-    const OBJECTIVE_NAME = __CLASS__;
-
     /**
      * Validate the Objective.
      *
      * @return ObjectiveResult
      */
-    public function validate();
+    public function validate()
+    {
+        return new ObjectiveResult(0);
+    }
 
     /**
      * The name of the objective.
-     * todo Rename to getDefinition
      *
      * @return string
      */
-    public function getName();
+    public function getName()
+    {
+        return 'null-objective';
+    }
 }

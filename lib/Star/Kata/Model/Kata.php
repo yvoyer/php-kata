@@ -9,6 +9,7 @@ namespace Star\Kata\Model;
 
 use Star\Component\Collection\TypedCollection;
 use Star\Kata\Exception\RuntimeException;
+use Star\Kata\Model\Objective\Objective;
 use Star\Kata\Model\Objective\TestObjective;
 use Star\Kata\Model\Step\Step;
 
@@ -44,6 +45,11 @@ class Kata
     private $srcPath;
 
     /**
+     * @var TypedCollection|Objective[]
+     */
+    private $objectives;
+
+    /**
      * @param string $srcPath
      * @param string $name
      *
@@ -53,6 +59,7 @@ class Kata
     {
         $this->name = $name;
         $this->steps = new TypedCollection(Step::INTERFACE_NAME);
+        $this->objectives = new TypedCollection(Objective::OBJECTIVE_NAME);
         $this->srcPath = $srcPath;
 
         $this->configure();
@@ -130,6 +137,14 @@ class Kata
     public function addStep(Step $step)
     {
         $this->steps->add($step);
+    }
+
+    /**
+     * @param Objective $objective
+     */
+    public function addObjective(Objective $objective)
+    {
+        $this->objectives->add($objective);
     }
 
     /**

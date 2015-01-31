@@ -29,7 +29,7 @@ final class BackGroundContext extends BehatContext
     /**
      * @Given /^The kata name is \'([^\']*)\'$/
      */
-    public function theKataNameIs($arg1)
+    public function theKataNameIs($name)
     {
         throw new PendingException();
     }
