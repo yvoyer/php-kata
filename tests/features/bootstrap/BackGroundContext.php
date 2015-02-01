@@ -16,6 +16,8 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use PHPUnit_Framework_Assert as Assert;
+use Star\Kata\Builder\KataBuilder;
+use Star\Kata\Infrastructure\KataInfrastructure;
 
 /**
  * Class BackGroundContext
@@ -27,91 +29,54 @@ use PHPUnit_Framework_Assert as Assert;
 final class BackGroundContext extends BehatContext
 {
     /**
+     * @var KataBuilder
+     */
+    private $kataBuilder;
+
+    /**
+     * @var KataInfrastructure
+     */
+    private $infrastructure;
+
+    public function __construct(KataBuilder $builder, KataInfrastructure $infrastructure)
+    {
+        $this->kataBuilder = $builder;
+        $this->infrastructure = $infrastructure;
+    }
+
+    /**
      * @Given /^The kata name is \'([^\']*)\'$/
      */
-    public function theKataNameIs($name)
+    public function theKataNameIs($kataName)
     {
-        throw new PendingException();
+        $this->kataBuilder
+            ->withName($kataName);
     }
 
     /**
-     * @Given /^The test requirement code for \'([^\']*)\' kata should be$/
+     * @Given /^The \'([^\']*)\' kata has the following objectives$/
      */
-    public function theTestRequirementCodeForKataShouldBe($arg1, PyStringNode $string)
+    public function theKataHasTheFollowingObjectives($arg1, TableNode $table)
     {
-        throw new PendingException();
+        foreach ($table->getHash() as $row) {
+            $code = $row['code'];
+            $closure = function() use ($code) {
+                return eval($code);
+            };
+            $this->kataBuilder
+                ->withObjective($row['description'], $closure);
+        }
     }
 
     /**
-     * @Given /^The \'([^\']*)\' kata objective is "([^"]*)"$/
+     * @Given /^The kata \'([^\']*)\' is registered$/
      */
-    public function theKataObjectiveIs($arg1, $arg2)
+    public function theKataIsRegistered($arg1)
     {
-        throw new PendingException();
-    }
+        $kata = $this->kataBuilder
+            ->build();
 
-    /**
-     * @Given /^the kata \'([^\']*)\' was never started$/
-     */
-    public function theKataWasNeverStarted($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @When /^I launch the kata \'([^\']*)\'$/
-     */
-    public function iLaunchTheKata($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then /^I should see \'Objective: Assert that a function named \'([^\']*)\' always returns true\.\'$/
-     */
-    public function iShouldSeeObjectiveAssertThatAFunctionNamedAlwaysReturnsTrue($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^I should be prompt to enter the php code$/
-     */
-    public function iShouldBePromptToEnterThePhpCode()
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^The kata \'([^\']*)\' is started$/
-     */
-    public function theKataIsStarted($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given /^I fill the following code$/
-     */
-    public function iFillTheFollowingCode(PyStringNode $string)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @When /^I finish the kata \'([^\']*)\'$/
-     */
-    public function iFinishTheKata($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then /^I should see a \'([^\']*)\' test$/
-     */
-    public function iShouldSeeATest($arg1)
-    {
-        throw new PendingException();
+        $this->infrastructure->kataRepository()->addKata($kata);
     }
 
     /**
@@ -129,5 +94,4 @@ final class BackGroundContext extends BehatContext
     {
         throw new PendingException();
     }
-
 }

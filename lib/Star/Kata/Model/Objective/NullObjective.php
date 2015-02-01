@@ -27,11 +27,9 @@ final class NullObjective implements Objective
     }
 
     /**
-     * The name of the objective.
-     *
      * @return string
      */
-    public function getName()
+    public function getDescription()
     {
         return 'null-objective';
     }

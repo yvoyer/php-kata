@@ -5,16 +5,15 @@ Feature:
 
   Background:
     Given The kata name is 'assert-true'
-    And The test requirement code for 'assert-true' kata should be
-    """
-    $this->assertTrue(assert-true());
-    """
-    And The 'assert-true' kata objective is "Assert that a function named 'assert-true()' always returns true."
+    And The 'assert-true' kata has the following objectives
+    | description | code |
+    | Assert that a function named 'assert-true()' always returns true. | \PHPUnit_Framework_Assert::assertTrue(assert-true()); |
+    And The kata 'assert-true' is registered
 
   Scenario: User starts the kata
     Given the kata 'assert-true' was never started
     When I launch the kata 'assert-true'
-    Then I should see 'Objective: Assert that a function named 'assert-true()' always returns true.'
+    Then I should see the objective description "Objective: Assert that a function named 'assert-true()' always returns true."
     And I should be prompt to enter the php code
 
   Scenario: User inputs a valid input

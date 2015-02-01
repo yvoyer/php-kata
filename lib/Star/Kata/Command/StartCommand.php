@@ -7,10 +7,8 @@
 
 namespace Star\Kata\Command;
 
-use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\Exception;
 use Star\Kata\KataDomain\KataService;
-use Star\Kata\Model\KataCollection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -66,7 +64,7 @@ class StartCommand extends Command
         try {
             $kata = $this->service->startKata($kataName);
 
-            $output->writeln('<info>' . $kata->getDescription() . '</info>');
+            $output->writeln('<info>Objective: ' . $kata->getDescription() . '</info>');
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
             return 1;

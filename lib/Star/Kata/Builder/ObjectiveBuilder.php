@@ -39,20 +39,20 @@ final class ObjectiveBuilder
      */
     public function build()
     {
-        $objective = new ConfigurableObjective($this->data['definition'], $this->data['code']);
+        $objective = new ConfigurableObjective($this->data['description'], $this->data['code']);
         $this->resetData();
 
         return $objective;
     }
 
     /**
-     * @param string $definition
+     * @param string $description
      *
      * @return $this
      */
-    public function withDefinition($definition)
+    public function withDescription($description)
     {
-        $this->data['definition'] = $definition;
+        $this->data['description'] = $description;
 
         return $this;
     }
@@ -72,7 +72,7 @@ final class ObjectiveBuilder
     private function resetData()
     {
         $this->data = array();
-        $this->withDefinition('Objective ' . $this->count ++);
+        $this->withDescription('Objective ' . $this->count ++);
         $this->withAssertCode(function() {
             throw new \RuntimeException('The assertion code should be configured.');
         });

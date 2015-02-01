@@ -75,15 +75,15 @@ final class KataBuilder
     }
 
     /**
-     * @param string   $definition
+     * @param string   $description
      * @param callable $assert
      *
      * @return $this
      */
-    public function withObjective($definition, \Closure $assert)
+    public function withObjective($description, \Closure $assert)
     {
         $this->objectives[] = $this->objectiveBuilder
-            ->withDefinition($definition)
+            ->withDescription($description)
             ->withAssertCode($assert)
             ->build();
 

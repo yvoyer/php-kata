@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -24,15 +24,15 @@ class TestObjective implements Objective
     /**
      * @var string
      */
-    private $name;
+    private $description;
 
     /**
-     * @param string $name
+     * @param string $description
      * @param \PHPUnit_Framework_Test $test
      */
-    public function __construct($name, \PHPUnit_Framework_Test $test)
+    public function __construct($description, \PHPUnit_Framework_Test $test)
     {
-        $this->name = $name;
+        $this->description = $description;
         $this->test = $test;
     }
 
@@ -55,12 +55,10 @@ class TestObjective implements Objective
     }
 
     /**
-     * The name of the objective.
-     *
      * @return string
      */
-    public function getName()
+    public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 }

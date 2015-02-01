@@ -19,7 +19,7 @@ final class ConfigurableObjective implements Objective
     /**
      * @var string
      */
-    private $definition;
+    private $description;
 
     /**
      * @var \Closure
@@ -27,12 +27,12 @@ final class ConfigurableObjective implements Objective
     private $assertCode;
 
     /**
-     * @param string   $definition
+     * @param string   $description
      * @param callable $assertCode
      */
-    public function __construct($definition, \Closure $assertCode)
+    public function __construct($description, \Closure $assertCode)
     {
-        $this->definition = $definition;
+        $this->description = $description;
         $this->assertCode = $assertCode;
     }
 
@@ -52,8 +52,8 @@ final class ConfigurableObjective implements Objective
      *
      * @return string
      */
-    public function getName()
+    public function getDescription()
     {
-        return $this->definition;
+        return $this->description;
     }
 }

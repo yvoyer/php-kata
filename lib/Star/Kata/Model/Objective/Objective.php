@@ -26,10 +26,7 @@ interface Objective
     public function validate();
 
     /**
-     * The name of the objective.
-     * todo Rename to getDefinition
-     *
      * @return string
      */
-    public function getName();
+    public function getDescription();
 }

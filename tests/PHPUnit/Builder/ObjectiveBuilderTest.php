@@ -35,23 +35,23 @@ final class ObjectiveBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function test_should_use_default_objective_definition()
     {
-        $this->assertSame('Objective 1', $this->builder->build()->getName());
+        $this->assertSame('Objective 1', $this->builder->build()->getDescription());
     }
 
     public function test_should_change_default_objective_definition_on_successive_calls()
     {
-        $this->assertSame('Objective 1', $this->builder->build()->getName());
-        $this->assertSame('Objective 2', $this->builder->build()->getName());
-        $this->assertSame('Objective 3', $this->builder->build()->getName());
+        $this->assertSame('Objective 1', $this->builder->build()->getDescription());
+        $this->assertSame('Objective 2', $this->builder->build()->getDescription());
+        $this->assertSame('Objective 3', $this->builder->build()->getDescription());
     }
 
     public function test_should_use_specified_objective_definition()
     {
         $objective = $this->builder
-            ->withDefinition('my-definition')
+            ->withDescription('my-description')
             ->build();
 
-        $this->assertSame('my-definition', $objective->getName());
+        $this->assertSame('my-description', $objective->getDescription());
     }
 
     public function test_should_use_specified_assert_code()

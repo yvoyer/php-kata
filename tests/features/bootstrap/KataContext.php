@@ -11,6 +11,9 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use PHPUnit_Framework_Assert as Assert;
+use Star\Kata\Builder\KataBuilder;
+use Star\Kata\Infrastructure\InMemoryInfrastructure;
+use Star\Kata\KataApplication;
 
 /**
  * Features context.
@@ -25,7 +28,13 @@ class KataContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-        $this->addSubContext(new BackGroundContext());
+        $builder = new KataBuilder();
+        $infrastructure = new InMemoryInfrastructure();
+        $application = new KataApplication('path', $infrastructure);
+
+        $this->addSubContext(new BackGroundContext($builder, $infrastructure));
+        $this->addSubContext(new UserStartsAKataScenario($application));
+        $this->addSubContext(new UserInputAValidInputScenario());
     }
 
     private function addSubContext(ContextInterface $context)

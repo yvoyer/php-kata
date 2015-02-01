@@ -32,7 +32,7 @@ class TestObjectiveSpec extends ObjectBehavior
 
     function it_has_a_name()
     {
-        $this->getName()->shouldReturn('test-name');
+        $this->getDescription()->shouldReturn('test-name');
     }
 
 //    function it_checks_whether_the_tests_pass(\PHPUnit_Framework_TestResult $result)

@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Kata;
+use Star\Kata\Model\Objective\Objective;
 use Star\Kata\Model\StartedKata;
 use Star\Kata\Model\Step\Step;
 
@@ -26,9 +27,9 @@ class KataSpec extends ObjectBehavior
         $this->getName()->shouldReturn('kata-name');
     }
 
-    function it_throw_exception_when_no_step_configured()
+    function it_throw_exception_when_no_objective_configured()
     {
-        $this->shouldThrow(new RuntimeException('Should have at least one step'))->duringStart();
+        $this->shouldThrow(new RuntimeException('Should have at least one objective.'))->duringStart();
     }
 
     function it_throw_exception_when_no_name_configured()
@@ -41,21 +42,10 @@ class KataSpec extends ObjectBehavior
         $this->getDescription()->shouldReturn('');
     }
 
-    function it_starts_the_kata(Step $step)
+    function it_starts_the_kata(Objective $objective)
     {
-        $step->init()->shouldBeCalled();
-        $step->isInitialized()->willReturn(false);
-        $this->addStep($step);
+        $this->addObjective($objective);
 
         $this->start()->shouldReturnAnInstanceOf(StartedKata::CLASS_NAME);
-    }
-
-    function it_does_no_starts_the_kata_when_already_started(Step $step)
-    {
-        $step->init()->shouldNotBeCalled();
-        $step->isInitialized()->willReturn(true);
-        $this->addStep($step);
-
-        $this->shouldThrow(new RuntimeException('The kata is already initialized.'))->duringStart();
     }
 }

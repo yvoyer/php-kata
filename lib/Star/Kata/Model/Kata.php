@@ -10,6 +10,7 @@ namespace Star\Kata\Model;
 use Star\Component\Collection\TypedCollection;
 use Star\Kata\Exception\RuntimeException;
 use Star\Kata\Model\Objective\Objective;
+use Star\Kata\Model\Objective\ObjectiveResult;
 use Star\Kata\Model\Objective\TestObjective;
 use Star\Kata\Model\Step\Step;
 
@@ -75,40 +76,21 @@ class Kata
     {
     }
 
-    private function isInitialized()
-    {
-        foreach ($this->steps as $step) {
-            if (! $step->isInitialized()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     /**
      * @return StartedKata
      * @throws \Star\Kata\Exception\RuntimeException
      */
     public function start()
     {
-        if ($this->steps->isEmpty()) {
-            throw new RuntimeException('Should have at least one step');
-        }
-
-        if ($this->isInitialized()) {
-            throw new RuntimeException('The kata is already initialized.');
-        }
-
-        foreach ($this->steps as $step) {
-            $step->init();
+        if ($this->objectives->isEmpty()) {
+            throw new RuntimeException('Should have at least one objective.');
         }
 
         return new StartedKata($this);
     }
 
     /**
-     * @return Objective\ObjectiveResult
+     * @return ObjectiveResult
      */
     public function end()
     {
@@ -178,7 +160,12 @@ class Kata
      */
     public function getDescription()
     {
-        return $this->description;
+        $descriptions = array();
+        foreach ($this->objectives as $objective) {
+            $descriptions[] = $objective->getDescription();
+        }
+
+        return implode("\n", $descriptions);
     }
 
     /**
