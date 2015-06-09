@@ -3,3 +3,4 @@
 /bin
 /src
 /phpunit.xml
+/composer.lock

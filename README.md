@@ -12,13 +12,14 @@ To install the application:
 * Run `php composer.phar install`
 
 Running unit tests: `phpunit`
-Running integration tests: `bin/phpspec run`
+Running integration tests: `bin/behat`
 
 ## Commands
 
-Starting a kata: `php phpkata.php start {kata-name}` (Not functional yet)
-Finish kata: `php phpkata.php finish` (Not available yet)
+Starting a kata: `php phpkata.php start {kata-name}`
+Evaluate the kata: `php phpkata.php continue`
 Listing katas: `php phpkata.php list` (Not available yet)
+Reset environment: `php phpkata.php reset` (Not available yet)
 
 [See expected features](https://github.com/yvoyer/php-kata/wiki/Features)
 
@@ -28,7 +29,7 @@ Listing katas: `php phpkata.php list` (Not available yet)
 * Create a branch from the master branch named `feature/{task-number}` ie. `feature/123`
 * Develop the feature
 * Commit and push with a commit message following the standard
-* Create a pull request for with `master` as destination.
+* Create a pull request with `master` as the destination.
 
 ## Commit format
 
@@ -45,4 +46,3 @@ Example
 
     * Add more information about feature
     * Add some more information about feature
-
