@@ -51,7 +51,7 @@ class KataContext extends BehatContext
     public function __construct(array $parameters)
     {
         $this->output = new BufferedOutput();
-        $this->basePath = __DIR__ . DIRECTORY_SEPARATOR . 'testSrc';
+        $this->basePath = __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
         $this->environment = new FilesystemEnvironment($this->basePath);
 
         $this->application = new ApplicationTester($this->environment);
