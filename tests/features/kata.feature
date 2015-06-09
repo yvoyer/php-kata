@@ -4,45 +4,56 @@ Feature:
   I need to write code based on objectives
 
   Background:
-    Given The kata name is 'assert-true'
-    And The test requirement code for 'assert-true' kata should be
-    """
-    $this->assertTrue(assert-true());
-    """
-    And The 'assert-true' kata objective is "Assert that a function named 'assert-true()' always returns true."
+    Given The 'assert-true' kata exists
 
   Scenario: User starts the kata
-    Given the kata 'assert-true' was never started
-    When I launch the kata 'assert-true'
-    Then I should see 'Objective: Assert that a function named 'assert-true()' always returns true.'
-    And I should be prompt to enter the php code
+    Given The code environment is empty
+    When I start the kata 'assert-true'
+    Then I should see
+    """
+    Kata: assert-true
+    Description: Always return true
 
-  Scenario: User inputs a valid input
-    Given The kata 'assert-true' is started
-    And I fill the following code
     """
-    function assert-true() { return true; }
-    """
-    When I finish the kata 'assert-true'
-    Then I should see a 'passing' test
-    And The following message should be visible 'Congratulation, the kata was successful.'
 
-  Scenario: User finishes the kata with no defined function
-    Given The kata 'assert-true' is started
-    And I fill the following code
+  Scenario: User inputs a valid code
+    Given The code kata 'assert-true' is started
+    And The file 'AssertTrue.php' contains the following code
     """
-    function invalid() { return true; }
+    <?php
+    class AssertTrue
+    {
+        public static function getValue()
+        {
+            return true;
+        }
+    }
     """
-    When I finish the kata 'assert-true'
-    Then I should see a 'failing' test
-    And The following message should be visible 'Failed asserting that the 'assert-true' method was called'
+    When I evaluate the kata 'assert-true'
+    Then I should see
+    """
+    Objective: Always return true
+    You finished all the objectives, 3 points awarded.
 
-  Scenario: User do not calls the kata method
-    Given The kata 'assert-true' is started
-    And I fill the following code
     """
-    function assert-true() { return false; }
+
+  Scenario: User inputs invalid code
+    Given The code kata 'assert-false' is started
+    And The file 'AssertFalse.php' contains the following code
     """
-    When I finish the kata 'assert-true'
-    Then I should see a 'failing' test
-    And  The following message should be visible 'Failed asserting the false equals true'
+    <?php
+    class AssertFalse
+    {
+        public static function getValue()
+        {
+            return false;
+        }
+    }
+    """
+    When I evaluate the kata 'assert-false'
+    Then I should see
+    """
+    Objective: Always return false
+    You succeed 2/3 objectives, 2 points awarded. Keep trying.
+
+    """

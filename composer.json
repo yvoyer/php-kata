@@ -2,19 +2,30 @@
     "name": "star/phpkata",
     "description": "Programming Kata for PHP",
     "autoload": {
-        "psr-0": {
-            "": ["lib", "tests", "src", ""]
+        "psr-4": {
+            "Star\\Kata\\": ["lib", ""],
+            "": "src"
         },
         "files": [
             "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Star\\": "tests/features/bootstrap",
+            "Star\\Kata\\": "tests/PHPUnit",
+            "": "tests/features/bootstrap/testSrc"
+        }
+    },
     "require": {
         "php": ">=5.3.3",
-        "star/collection": "~1.0"
+        "star/collection": "~1.0",
+        "symfony/yaml": "~2.1.0",
+        "symfony/console": "~2.6.0",
+        "symfony/translation": "~2.6.0",
+        "mikey179/vfsStream": "~1.4"
     },
     "require-dev": {
-        "phpspec/phpspec": "2.0.*@dev",
         "phpunit/phpunit": "~4.0",
         "behat/behat": "2.4.*@stable"
     },
