@@ -3,3 +3,5 @@
 /bin
 /src
 /phpunit.xml
+/composer.lock
+/composer.phar

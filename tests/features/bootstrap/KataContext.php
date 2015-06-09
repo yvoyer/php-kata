@@ -26,6 +26,7 @@ class KataContext extends BehatContext
     public function __construct(array $parameters)
     {
         $this->addSubContext(new BackGroundContext());
+        $this->addSubContext(new SelectKataContext());
     }
 
     private function addSubContext(ContextInterface $context)
