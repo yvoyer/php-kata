@@ -82,10 +82,10 @@ class LegacyKata implements Kata
     }
 
     /**
-     * @param ClassGenerator $generator
+     * @param Environment $environment
      * @return StartedKata
      */
-    public function start(ClassGenerator $generator)
+    public function start(Environment $environment)
     {
         return new StartedKata($this, $this->createObjective());
     }

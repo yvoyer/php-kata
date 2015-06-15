@@ -9,7 +9,7 @@ namespace tests\PHPUnit\Infrastructure;
 
 use Star\Kata\Infrastructure\InMemoryInfrastructure;
 use Star\Kata\KataDomain\KataService;
-use Star\Kata\Model\KataCollection;
+use Star\Kata\Infrastructure\InMemory\KataCollection;
 
 /**
  * Class InMemoryInfrastructureTest
@@ -17,10 +17,6 @@ use Star\Kata\Model\KataCollection;
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package tests\PHPUnit\Infrastructure
- *
- * @covers Star\Kata\Infrastructure\InMemoryInfrastructure
- * @uses Star\Kata\Model\KataCollection
- * @uses Star\Kata\KataDomain\KataService
  *
  * @deprecated todo Remove
  */

@@ -9,6 +9,7 @@ namespace Star\Kata\Data\Fibonacci;
 
 use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\KataRunner;
+use Star\Kata\Model\Environment;
 use Star\Kata\Model\Kata;
 use Star\Kata\Model\Objective\Objective;
 use Star\Kata\Model\Objective\ObjectiveResult;
@@ -44,11 +45,11 @@ final class FibonacciKata implements Kata
     /**
      * Define pre-conditions to use kata.
      *
-     * @param ClassGenerator $generator
+     * @param Environment $environment
      *
      * @return StartedKata
      */
-    public function start(ClassGenerator $generator)
+    public function start(Environment $environment)
     {
         return new StartedKata($this, $this->createObjective());
     }

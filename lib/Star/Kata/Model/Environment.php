@@ -8,21 +8,16 @@
 namespace Star\Kata\Model;
 
 /**
- * Class KataRepository
+ * Class Environment
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Model
  */
-interface KataRepository
+interface Environment
 {
-    // todo remove
-    const INTERFACE_NAME = __CLASS__;
-
     /**
-     * @param string $name
-     *
-     * @return null|Kata
+     * @param string $className
      */
-    public function findOneByName($name);
+    public function generateClass($className);
 }

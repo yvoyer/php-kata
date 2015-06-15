@@ -7,10 +7,8 @@
 
 namespace Star\Kata\Model\Step;
 
-use Star\Kata\Configuration\Configuration;
-use Star\Kata\Generator\ClassGenerator;
+use Star\Kata\Infrastructure\Filesystem\ClassGenerator;
 use Star\Kata\Model\ClassTemplate;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class CreateClassStep

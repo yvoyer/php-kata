@@ -19,6 +19,14 @@ trait KataMock
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
+    protected function getMockEnvironment()
+    {
+        return $this->getMock('Star\Kata\Model\Environment');
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function getMockKata()
     {
         return $this->getMock('Star\Kata\Model\Kata');
@@ -27,18 +35,16 @@ trait KataMock
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getMockObjective()
+    protected function getMockKataRepository()
     {
-        return $this->getMock('Star\Kata\Model\Objective\Objective');
+        return $this->getMock('Star\Kata\Model\KataRepository');
     }
 
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getMockClassGenerator()
+    protected function getMockObjective()
     {
-        return $this->getMockBuilder('Star\Kata\Generator\ClassGenerator')
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->getMock('Star\Kata\Model\Objective\Objective');
     }
 }

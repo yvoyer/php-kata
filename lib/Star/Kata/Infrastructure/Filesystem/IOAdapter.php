@@ -1,11 +1,11 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Generator;
+namespace Star\Kata\Infrastructure\Filesystem;
 
 use PhpSpec\Console\IO;
 use Symfony\Component\Console\Helper\HelperSet;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\NullOutput;
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Generator
+ * @package Star\Kata\Infrastructure\Filesystem
  */
 class IOAdapter extends IO
 {
@@ -26,4 +26,3 @@ class IOAdapter extends IO
         parent::__construct(new ArrayInput(array()), new NullOutput(), new HelperSet());
     }
 }
- 

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Star\Kata\Generator;
+namespace spec\Star\Kata\Infrastructure\Filesystem;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -20,7 +20,7 @@ class ClassGeneratorSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Star\Kata\Generator\ClassGenerator');
+        $this->shouldHaveType('Star\Kata\Infrastructure\Filesystem\ClassGenerator');
     }
 
     function it_creates_a_file()

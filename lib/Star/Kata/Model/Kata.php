@@ -7,7 +7,6 @@
 
 namespace Star\Kata\Model;
 
-use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\KataRunner;
 use Star\Kata\Model\Objective\Objective;
 use Star\Kata\Model\Objective\ObjectiveResult;
@@ -36,11 +35,11 @@ interface Kata
     /**
      * Define pre-conditions to use kata.
      *
-     * @param ClassGenerator $generator
+     * @param Environment $environment
      *
      * @return StartedKata
      */
-    public function start(ClassGenerator $generator);
+    public function start(Environment $environment);
 
     /**
      * @return string

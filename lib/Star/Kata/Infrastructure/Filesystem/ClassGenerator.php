@@ -1,11 +1,11 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Generator;
+namespace Star\Kata\Infrastructure\Filesystem;
 
 use PhpSpec\CodeGenerator\Generator\ClassGenerator as PhpSpecClassGenerator;
 use PhpSpec\CodeGenerator\TemplateRenderer;
@@ -16,7 +16,7 @@ use PhpSpec\Locator\PSR0\PSR0Locator;
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Generator
+ * @package Star\Kata\Infrastructure\Filesystem
  */
 class ClassGenerator
 {
@@ -47,4 +47,3 @@ class ClassGenerator
         $this->generator->generate($this->locator->createResource($className));
     }
 }
- 

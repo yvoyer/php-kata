@@ -4,7 +4,7 @@ namespace spec\Star\Kata\Model\Step;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Star\Kata\Generator\ClassGenerator;
+use Star\Kata\Infrastructure\Filesystem\ClassGenerator;
 use Star\Kata\Model\ClassTemplate;
 
 class CreateClassStepSpec extends ObjectBehavior

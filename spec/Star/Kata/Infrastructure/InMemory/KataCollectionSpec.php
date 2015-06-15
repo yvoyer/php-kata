@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Star\Kata\Model;
+namespace spec\Star\Kata\Infrastructure\InMemory;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -15,7 +15,7 @@ class KataCollectionSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Star\Kata\Model\KataCollection');
+        $this->shouldHaveType('Star\Kata\Infrastructure\InMemory\KataCollection');
     }
 
     function it_returns_a_kata(Kata $kata)

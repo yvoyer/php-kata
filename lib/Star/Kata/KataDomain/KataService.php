@@ -11,6 +11,7 @@ use Star\Kata\Exception\EntityNotFoundException;
 use Star\Kata\Exception\InvalidArgumentException;
 use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\KataRunner;
+use Star\Kata\Model\Environment;
 use Star\Kata\Model\KataRepository;
 
 /**
@@ -30,18 +31,18 @@ final class KataService
     private $katas;
 
     /**
-     * @var ClassGenerator
+     * @var Environment
      */
-    private $generator;
+    private $environment;
 
     /**
      * @param KataRepository $repository
-     * @param ClassGenerator $generator
+     * @param Environment $environment
      */
-    public function __construct(KataRepository $repository, ClassGenerator $generator)
+    public function __construct(KataRepository $repository, Environment $environment)
     {
         $this->katas = $repository;
-        $this->generator = $generator;
+        $this->environment = $environment;
     }
 
     /**
@@ -53,16 +54,12 @@ final class KataService
      */
     public function startKata($kataName)
     {
-        if (empty($kataName)) {
-            throw new InvalidArgumentException('Kata must be supplied.');
-        }
+        $this->guardAgainstInvalidName($kataName);
 
         $kata = $this->katas->findOneByName($kataName);
-        if (null === $kata) {
-            throw new EntityNotFoundException("The '{$kataName}' kata was not found.");
-        }
+        $this->guardAgainstNotFoundKata($kataName, $kata);
 
-        return $kata->start($this->generator);
+        return $kata->start($this->environment);
     }
 
     /**
@@ -73,12 +70,34 @@ final class KataService
      */
     public function evaluate($kataName)
     {
-        if (empty($kataName)) {
-            throw new \RuntimeException('Kata must be supplied.');
-        }
+        $this->guardAgainstInvalidName($kataName);
 
         $kata = $this->katas->findOneByName($kataName);
+        $this->guardAgainstNotFoundKata($kataName, $kata);
 
         return $kata->evaluate(new KataRunner());
+    }
+
+    /**
+     * @param string $kataName
+     * @param $kata
+     * @throws \Star\Kata\Exception\EntityNotFoundException
+     */
+    private function guardAgainstNotFoundKata($kataName, $kata)
+    {
+        if (null === $kata) {
+            throw new EntityNotFoundException("The '{$kataName}' kata was not found.");
+        }
+    }
+
+    /**
+     * @param string $kataName
+     * @throws \Star\Kata\Exception\InvalidArgumentException
+     */
+    private function guardAgainstInvalidName($kataName)
+    {
+        if (empty($kataName)) {
+            throw new InvalidArgumentException('The kata name is invalid.');
+        }
     }
 }

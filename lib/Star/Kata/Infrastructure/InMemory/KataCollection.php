@@ -5,16 +5,18 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Model;
+namespace Star\Kata\Infrastructure\InMemory;
 
 use Star\Component\Collection\TypedCollection;
+use Star\Kata\Model\Kata;
+use Star\Kata\Model\KataRepository;
 
 /**
  * Class KataCollection
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Model
+ * @package Star\Kata\Infrastructure\InMemory
  */
 class KataCollection implements KataRepository
 {
