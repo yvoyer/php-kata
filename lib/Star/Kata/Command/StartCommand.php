@@ -11,6 +11,7 @@ use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\Exception;
 use Star\Kata\KataDomain\KataService;
 use Star\Kata\Model\KataCollection;
+use Star\Kata\View\SymfonyConsoleRenderer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -62,13 +63,14 @@ class StartCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $kataName = $input->getArgument('kata');
+        $renderer = new SymfonyConsoleRenderer($output);
 
         try {
             $kata = $this->service->startKata($kataName);
 
-            $output->writeln('<info>' . $kata->getDescription() . '</info>');
+            $renderer->displayKata($kata);
         } catch (Exception $e) {
-            $output->writeln('<error>' . $e->getMessage() . '</error>');
+            $renderer->displayError($e);
             return 1;
         }
 

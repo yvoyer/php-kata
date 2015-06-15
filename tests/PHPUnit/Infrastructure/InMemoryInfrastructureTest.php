@@ -21,6 +21,8 @@ use Star\Kata\Model\KataCollection;
  * @covers Star\Kata\Infrastructure\InMemoryInfrastructure
  * @uses Star\Kata\Model\KataCollection
  * @uses Star\Kata\KataDomain\KataService
+ *
+ * @deprecated todo Remove
  */
 final class InMemoryInfrastructureTest extends \PHPUnit_Framework_TestCase
 {

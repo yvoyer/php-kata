@@ -7,6 +7,8 @@
 
 namespace Star\Kata\Model;
 
+use Star\Kata\Model\Objective\Objective;
+
 /**
  * Class StartedKata
  *
@@ -24,11 +26,18 @@ final class StartedKata
     private $wrappedKata;
 
     /**
-     * @param Kata $kata
+     * @var Objective
      */
-    public function __construct(Kata $kata)
+    private $objective;
+
+    /**
+     * @param Kata $kata
+     * @param Objective $objective
+     */
+    public function __construct(Kata $kata, Objective $objective)
     {
         $this->wrappedKata = $kata;
+        $this->objective = $objective;
     }
 
     /**
@@ -36,7 +45,7 @@ final class StartedKata
      */
     public function getName()
     {
-        return $this->wrappedKata->getName();
+        return $this->wrappedKata->name();
     }
 
     /**
@@ -44,6 +53,6 @@ final class StartedKata
      */
     public function getDescription()
     {
-        return $this->wrappedKata->getDescription();
+        return $this->objective->description();
     }
 }

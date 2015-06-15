@@ -7,8 +7,8 @@
 
 namespace tests\PHPUnit\Model;
 
-use Star\Kata\Model\Kata;
 use Star\Kata\Model\StartedKata;
+use tests\PHPUnit\KataMock;
 
 /**
  * Class StartedKataTest
@@ -21,6 +21,8 @@ use Star\Kata\Model\StartedKata;
  */
 final class StartedKataTest extends \PHPUnit_Framework_TestCase
 {
+    use KataMock;
+
     /**
      * @var StartedKata
      */
@@ -31,20 +33,24 @@ final class StartedKataTest extends \PHPUnit_Framework_TestCase
      */
     private $wrappedKata;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $wrappedObjective;
+
     public function setUp()
     {
-        $this->wrappedKata = $this->getMockBuilder(Kata::CLASS_NAME)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->wrappedKata = $this->getMockKata();
+        $this->wrappedObjective = $this->getMockObjective();
 
-        $this->kata = new StartedKata($this->wrappedKata);
+        $this->kata = new StartedKata($this->wrappedKata, $this->wrappedObjective);
     }
 
     public function test_should_return_the_name()
     {
         $this->wrappedKata
             ->expects($this->once())
-            ->method('getName')
+            ->method('name')
             ->willReturn('name');
 
         $this->assertSame('name', $this->kata->getName());
@@ -52,9 +58,9 @@ final class StartedKataTest extends \PHPUnit_Framework_TestCase
 
     public function test_should_return_the_description()
     {
-        $this->wrappedKata
+        $this->wrappedObjective
             ->expects($this->once())
-            ->method('getDescription')
+            ->method('description')
             ->willReturn('desc');
 
         $this->assertSame('desc', $this->kata->getDescription());

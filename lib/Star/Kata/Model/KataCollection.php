@@ -30,7 +30,7 @@ class KataCollection implements KataRepository
      */
     public function __construct(array $katas = array())
     {
-        $this->katas = new TypedCollection(Kata::CLASS_NAME);
+        $this->katas = new TypedCollection('Star\Kata\Model\Kata');
         $this->addKatas($katas);
     }
 
@@ -59,7 +59,7 @@ class KataCollection implements KataRepository
      */
     public function addKata(Kata $kata)
     {
-        $this->katas[$kata->getName()] = $kata;
+        $this->katas[$kata->name()] = $kata;
     }
 
     /**

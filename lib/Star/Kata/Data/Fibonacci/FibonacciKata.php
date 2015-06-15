@@ -5,33 +5,41 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Model;
+namespace Star\Kata\Data\Fibonacci;
 
 use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\KataRunner;
+use Star\Kata\Model\Kata;
 use Star\Kata\Model\Objective\Objective;
 use Star\Kata\Model\Objective\ObjectiveResult;
+use Star\Kata\Model\StartedKata;
 
 /**
- * Class Kata
+ * Class FibonacciKata
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Model
+ * @package Star\Kata\Data\Fibonacci
  */
-interface Kata
+final class FibonacciKata implements Kata
 {
     /**
      * @return Objective
      */
-    public function createObjective();
+    public function createObjective()
+    {
+        return new FibonacciTest();
+    }
 
     /**
      * @param KataRunner $handler
      *
      * @return ObjectiveResult
      */
-    public function evaluate(KataRunner $handler);
+    public function evaluate(KataRunner $handler)
+    {
+        return $handler->run($this);
+    }
 
     /**
      * Define pre-conditions to use kata.
@@ -40,10 +48,16 @@ interface Kata
      *
      * @return StartedKata
      */
-    public function start(ClassGenerator $generator);
+    public function start(ClassGenerator $generator)
+    {
+        return new StartedKata($this, $this->createObjective());
+    }
 
     /**
      * @return string
      */
-    public function name();
+    public function name()
+    {
+        return 'fibonacci';
+    }
 }

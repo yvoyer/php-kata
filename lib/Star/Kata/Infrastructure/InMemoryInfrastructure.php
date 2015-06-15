@@ -9,6 +9,7 @@ namespace Star\Kata\Infrastructure;
 
 use Star\Kata\Exception\AlreadyRegisteredServiceException;
 use Star\Kata\Exception\ServiceNotFoundException;
+use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\KataDomain\KataService;
 use Star\Kata\Model\KataCollection;
 use Star\Kata\Model\KataRepository;
@@ -19,6 +20,8 @@ use Star\Kata\Model\KataRepository;
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Infrastructure
+ *
+ * @deprecated todo check if still useful
  */
 final class InMemoryInfrastructure implements KataInfrastructure
 {
@@ -43,7 +46,7 @@ final class InMemoryInfrastructure implements KataInfrastructure
         });
 
         $this->setDefinition('kata-service', function() use ($infrastructure) {
-            return new KataService($infrastructure->kataRepository());
+            return new KataService($infrastructure->kataRepository(), new ClassGenerator(''));
         });
     }
 

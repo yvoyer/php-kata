@@ -9,7 +9,8 @@ namespace Star\Kata\KataDomain;
 
 use Star\Kata\Exception\EntityNotFoundException;
 use Star\Kata\Exception\InvalidArgumentException;
-use Star\Kata\Model\KataCollection;
+use Star\Kata\Generator\ClassGenerator;
+use Star\Kata\KataRunner;
 use Star\Kata\Model\KataRepository;
 
 /**
@@ -29,11 +30,18 @@ final class KataService
     private $katas;
 
     /**
-     * @param KataRepository $repository
+     * @var ClassGenerator
      */
-    public function __construct(KataRepository $repository)
+    private $generator;
+
+    /**
+     * @param KataRepository $repository
+     * @param ClassGenerator $generator
+     */
+    public function __construct(KataRepository $repository, ClassGenerator $generator)
     {
         $this->katas = $repository;
+        $this->generator = $generator;
     }
 
     /**
@@ -54,6 +62,23 @@ final class KataService
             throw new EntityNotFoundException("The '{$kataName}' kata was not found.");
         }
 
-        return $kata->start();
+        return $kata->start($this->generator);
+    }
+
+    /**
+     * @param $kataName
+     *
+     * @return \Star\Kata\Model\Objective\ObjectiveResult
+     * @throws \RuntimeException
+     */
+    public function evaluate($kataName)
+    {
+        if (empty($kataName)) {
+            throw new \RuntimeException('Kata must be supplied.');
+        }
+
+        $kata = $this->katas->findOneByName($kataName);
+
+        return $kata->evaluate(new KataRunner());
     }
 }

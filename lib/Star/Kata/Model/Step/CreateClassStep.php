@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -18,6 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Model\Step
+ * @deprecated todo Remove
  */
 class CreateClassStep implements Step
 {

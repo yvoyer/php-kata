@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -13,6 +13,7 @@ namespace Star\Kata\Model\Step;
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Model\Step
+ * @deprecated todo Remove
  */
 interface Step
 {
@@ -42,4 +43,3 @@ interface Step
      */
     public function isInitialized();
 }
- 

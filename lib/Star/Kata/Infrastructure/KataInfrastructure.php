@@ -16,6 +16,7 @@ use Star\Kata\Model\KataRepository;
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Infrastructure
+ * @deprecated todo Remove
  */
 interface KataInfrastructure
 {

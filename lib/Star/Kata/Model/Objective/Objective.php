@@ -1,33 +1,33 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
 namespace Star\Kata\Model\Objective;
 
 /**
- * Class Objective
+ * Class ObjectiveTestCase
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Model\Objective
+ * @package Star\Kata\Model\ObjectiveTestCase
  */
 interface Objective
 {
     /**
-     * Validate the Objective.
-     *
-     * @return ObjectiveResult
+     * @return int
      */
-    public function validate();
+    public function getMaximumPoints();
 
     /**
-     * The name of the objective.
-     *
+     * @return ObjectiveResult
+     */
+    public function createResult();
+
+    /**
      * @return string
      */
-    public function getName();
+    public function description();
 }
- 

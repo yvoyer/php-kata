@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of the phpkata project.
- * 
+ *
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
@@ -9,8 +9,9 @@ namespace Star\Kata;
 
 use Star\Kata\Command\ContinueCommand;
 use Star\Kata\Command\StartCommand;
-use Star\Kata\Configuration\Configuration;
-use Star\Kata\Data\FibonacciKata;
+use Star\Kata\Data\Fibonacci\FibonacciKata;
+use Star\Kata\Generator\ClassGenerator;
+use Star\Kata\KataDomain\KataService;
 use Star\Kata\Model\KataCollection;
 use Symfony\Component\Console\Application;
 
@@ -36,8 +37,11 @@ class KataApplication extends Application
         $this->srcPath = $srcPath;
 
         $collection = $this->getDefaultKatas();
-        $this->add(new StartCommand($collection));
-        $this->add(new ContinueCommand($collection));
+
+        $service = new KataService($collection, new ClassGenerator($srcPath));
+
+        $this->add(new StartCommand($service));
+        $this->add(new ContinueCommand($service));
     }
 
     /**
@@ -46,9 +50,8 @@ class KataApplication extends Application
     protected function getDefaultKatas()
     {
         $collection = new KataCollection();
-        $collection->addKata(new FibonacciKata($this->srcPath));
+        $collection->addKata(new FibonacciKata());
 
         return $collection;
     }
 }
- 

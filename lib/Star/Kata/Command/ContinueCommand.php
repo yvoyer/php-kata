@@ -9,7 +9,10 @@ namespace Star\Kata\Command;
 
 use Star\Kata\Configuration\Configuration;
 use Star\Kata\Exception\Exception;
+use Star\Kata\KataDomain\KataService;
+use Star\Kata\KataRunner;
 use Star\Kata\Model\KataCollection;
+use Star\Kata\View\SymfonyConsoleRenderer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,17 +28,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ContinueCommand extends Command
 {
     /**
-     * @var KataCollection
+     * @var KataService
      */
-    private $collection;
+    private $service;
 
     /**
-     * @param KataCollection $collection
+     * @param KataService $service
      */
-    public function __construct(KataCollection $collection)
+    public function __construct(KataService $service)
     {
         parent::__construct('continue');
-        $this->collection = $collection;
+        $this->service = $service;
     }
 
     public function configure()
@@ -60,24 +63,20 @@ class ContinueCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $renderer = new SymfonyConsoleRenderer($output);
+
         try {
             $kata = $input->getArgument('kata');
-            if (empty($kata)) {
-                throw new \RuntimeException('Kata must be supplied.');
-            }
+            $result = $this->service->evaluate($kata);
 
-            $kata = $this->collection->findOneByName($kata);
-
-            $output->writeln('<info>' . $kata->getDescription() . '</info>');
-            $result = $kata->end();
-
+            $renderer->displayObjective($result->objective());
             if ($result->isSuccess()) {
-                $output->writeln('    <comment>Objective completed: ' . $result->getPoints() . ' points.</comment>');
+                $renderer->displaySuccess($result);
             } else {
-                $output->writeln('    <error>Objective failed with ' . $result->getPoints() . ' points</error>');
+                $renderer->displayFailure($result);
             }
         } catch (Exception $e) {
-            $output->writeln('<error>' . $e->getMessage() . '</error>');
+            $renderer->displayError($e);
             return 1;
         }
 

@@ -67,7 +67,7 @@ final class BackGroundContext extends BehatContext
     }
 
     /**
-     * @Then /^I should see \'Objective: Assert that a function named \'([^\']*)\' always returns true\.\'$/
+     * @Then /^I should see \'ObjectiveTestCase: Assert that a function named \'([^\']*)\' always returns true\.\'$/
      */
     public function iShouldSeeObjectiveAssertThatAFunctionNamedAlwaysReturnsTrue($arg1)
     {
