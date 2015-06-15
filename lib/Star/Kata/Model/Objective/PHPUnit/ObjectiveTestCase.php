@@ -9,6 +9,7 @@ namespace Star\Kata\Model\Objective\PHPUnit;
 
 use Star\Kata\Model\Objective\ObjectiveResult;
 use \Star\Kata\Model\Objective\Objective;
+use Star\Kata\Model\Objective\StandardResult;
 
 /**
  * Class ObjectiveTestCase
@@ -40,6 +41,6 @@ abstract class ObjectiveTestCase extends \PHPUnit_Framework_TestCase implements 
      */
     public function createResult()
     {
-        return new PHPUnitObjectiveResult($this->getMaximumPoints(), $this);
+        return new StandardResult($this->getMaximumPoints(), $this);
     }
 }

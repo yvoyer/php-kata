@@ -43,6 +43,7 @@ class KataApplication extends Application
 
         $this->add(new StartCommand($service));
         $this->add(new ContinueCommand($service));
+        // todo add reset command
     }
 
     /**

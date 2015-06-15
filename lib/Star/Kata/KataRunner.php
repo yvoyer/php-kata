@@ -7,6 +7,7 @@
 
 namespace Star\Kata;
 
+use Star\Kata\Model\Environment;
 use Star\Kata\Model\Kata;
 use Star\Kata\Model\Objective\ObjectiveResult;
 use Star\Kata\PHPUnit\KataTestRunner;

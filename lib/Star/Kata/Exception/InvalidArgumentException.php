@@ -14,6 +14,6 @@ namespace Star\Kata\Exception;
  *
  * @package Star\Kata\Exception
  */
-class InvalidArgumentException extends \Exception implements Exception
+class InvalidArgumentException extends \Exception implements KataException
 {
 }

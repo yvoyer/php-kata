@@ -72,6 +72,6 @@ final class SymfonyConsoleRenderer implements ResultRenderer
     public function displayKata(StartedKata $kata)
     {
         $this->output->writeln("Kata: <comment>{$kata->getName()}</comment>");
-        $this->output->writeln("ObjectiveTestCase: <info>{$kata->getDescription()}</info>");
+        $this->output->writeln("Description: <info>{$kata->getDescription()}</info>");
     }
 }

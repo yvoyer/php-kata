@@ -7,10 +7,8 @@
 
 namespace Star\Kata\Command;
 
-use Star\Kata\Configuration\Configuration;
-use Star\Kata\Exception\Exception;
+use Star\Kata\Exception\KataException;
 use Star\Kata\KataDomain\KataService;
-use Star\Kata\Model\KataCollection;
 use Star\Kata\View\SymfonyConsoleRenderer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -68,8 +66,9 @@ class StartCommand extends Command
         try {
             $kata = $this->service->startKata($kataName);
 
+            // todo use event to render?
             $renderer->displayKata($kata);
-        } catch (Exception $e) {
+        } catch (KataException $e) {
             $renderer->displayError($e);
             return 1;
         }

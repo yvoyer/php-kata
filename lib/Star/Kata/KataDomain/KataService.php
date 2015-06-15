@@ -9,7 +9,6 @@ namespace Star\Kata\KataDomain;
 
 use Star\Kata\Exception\EntityNotFoundException;
 use Star\Kata\Exception\InvalidArgumentException;
-use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\KataRunner;
 use Star\Kata\Model\Environment;
 use Star\Kata\Model\KataRepository;
@@ -59,6 +58,7 @@ final class KataService
         $kata = $this->katas->findOneByName($kataName);
         $this->guardAgainstNotFoundKata($kataName, $kata);
 
+        // todo add KataWasStartedEvent to print objectives?
         return $kata->start($this->environment);
     }
 
@@ -75,6 +75,7 @@ final class KataService
         $kata = $this->katas->findOneByName($kataName);
         $this->guardAgainstNotFoundKata($kataName, $kata);
 
+        // todo add KataWasEvaluatedEvent to print result?
         return $kata->evaluate(new KataRunner());
     }
 

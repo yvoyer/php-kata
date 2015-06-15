@@ -20,4 +20,11 @@ interface Environment
      * @param string $className
      */
     public function generateClass($className);
+
+    /**
+     * Check if the environment already contains data.
+     *
+     * @return bool
+     */
+    public function isClean();
 }

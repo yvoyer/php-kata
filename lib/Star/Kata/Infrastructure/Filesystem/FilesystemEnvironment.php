@@ -24,11 +24,17 @@ final class FilesystemEnvironment implements Environment
     private $classGenerator;
 
     /**
+     * @var \FilesystemIterator
+     */
+    private $filesystem;
+
+    /**
      * @param string $basePath
      */
     public function __construct($basePath)
     {
         $this->classGenerator = new ClassGenerator($basePath);
+        $this->filesystem = new \FilesystemIterator($basePath);
     }
 
     /**
@@ -37,5 +43,15 @@ final class FilesystemEnvironment implements Environment
     public function generateClass($className)
     {
         $this->classGenerator->generate($className);
+    }
+
+    /**
+     * Check if the environment already contains data.
+     *
+     * @return bool
+     */
+    public function isClean()
+    {
+        return ! $this->filesystem->valid();
     }
 }

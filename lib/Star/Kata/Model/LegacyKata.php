@@ -8,7 +8,7 @@
 namespace Star\Kata\Model;
 
 use Star\Component\Collection\TypedCollection;
-use Star\Kata\Exception\RuntimeException;
+use Star\Kata\Exception\RuntimeKataException;
 use Star\Kata\Generator\ClassGenerator;
 use Star\Kata\KataRunner;
 use Star\Kata\Model\Objective\NotImplementedObjective;
@@ -55,7 +55,7 @@ class LegacyKata implements Kata
      * @param string $name
      *
      * @return Kata
-     * @throws \Star\Kata\Exception\RuntimeException
+     * @throws \Star\Kata\Exception\RuntimeKataException
      */
     public static function fromLegacy($srcPath, $name = '')
     {
@@ -67,7 +67,7 @@ class LegacyKata implements Kata
         $kata->setName($name);
         $kata->configure();
         if (0 == strlen($kata->name())) {
-            throw new RuntimeException('Name should be configured.');
+            throw new RuntimeKataException('Name should be configured.');
         }
 
         return $kata;
@@ -98,7 +98,7 @@ class LegacyKata implements Kata
     {
         return $this->evaluate(new KataRunner());
 //        if ($this->steps->isEmpty()) {
-//            throw new RuntimeException('Should have at least one step');
+//            throw new RuntimeKataException('Should have at least one step');
 //        }
         // todo check that the kata is initialized
 //        $class = '\FibonacciSequenceTest';
@@ -148,7 +148,7 @@ class LegacyKata implements Kata
      */
     public function evaluate(KataRunner $handler)
     {
-        return $handler->run($this);//throw new \RuntimeException('Method ' . __METHOD__ . ' not implemented yet.');
+        return $handler->run($this);//throw new \RuntimeKataException('Method ' . __METHOD__ . ' not implemented yet.');
     }
 
     /**

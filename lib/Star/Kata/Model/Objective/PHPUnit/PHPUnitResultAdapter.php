@@ -11,101 +11,28 @@ use Exception;
 use PHPUnit_Framework_AssertionFailedError;
 use PHPUnit_Framework_Test;
 use PHPUnit_Framework_TestSuite;
-use Star\Kata\Model\Objective\Objective;
 use Star\Kata\Model\Objective\ObjectiveResult;
 
 /**
- * Class PHPUnitObjectiveResult
+ * Class PHPUnitResultAdapter
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Model\ObjectiveTestCase
+ * @package Star\Kata\Model\Objective\PHPUnit
  */
-class PHPUnitObjectiveResult implements \PHPUnit_Framework_TestListener, ObjectiveResult
+final class PHPUnitResultAdapter implements \PHPUnit_Framework_TestListener
 {
-    const CLASS_NAME = __CLASS__;
+    /**
+     * @var ObjectiveResult
+     */
+    private $result;
 
     /**
-     * @var integer
+     * @param ObjectiveResult $result
      */
-    private $points;
-
-    /**
-     * @var integer
-     */
-    private $maxPoints;
-
-    /**
-     * @var Objective
-     */
-    private $objective;
-
-    /**
-     * @param int $maxPoints
-     * @param Objective $objective
-     */
-    public function __construct($maxPoints, Objective $objective)
+    public function __construct(ObjectiveResult $result)
     {
-        $this->maxPoints = $maxPoints;
-        $this->points = $maxPoints;
-        $this->objective = $objective;
-    }
-
-    /**
-     * @return int
-     */
-    public function points()
-    {
-        return $this->points;
-    }
-
-    /**
-     * @return int
-     */
-    public function maxPoints()
-    {
-        return $this->maxPoints;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSuccess()
-    {
-        return $this->points() == $this->maxPoints;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFailure()
-    {
-        return ! $this->isSuccess();
-    }
-
-    /**
-     * @return Objective
-     */
-    public function objective()
-    {
-        return $this->objective;
-    }
-
-    private function fail()
-    {
-        $this->points --;
-    }
-
-    /**
-     * A failure occurred.
-     *
-     * @param PHPUnit_Framework_Test $test
-     * @param PHPUnit_Framework_AssertionFailedError $e
-     * @param float $time
-     */
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
-    {
-        $this->fail();
+        $this->result = $result;
     }
 
     /**
@@ -117,7 +44,19 @@ class PHPUnitObjectiveResult implements \PHPUnit_Framework_TestListener, Objecti
      */
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
-        $this->fail();
+        $this->result->failRequirement($e->getMessage());
+    }
+
+    /**
+     * A failure occurred.
+     *
+     * @param PHPUnit_Framework_Test $test
+     * @param PHPUnit_Framework_AssertionFailedError $e
+     * @param float $time
+     */
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    {
+        $this->result->failRequirement($e->getMessage());
     }
 
     /**
@@ -129,7 +68,7 @@ class PHPUnitObjectiveResult implements \PHPUnit_Framework_TestListener, Objecti
      */
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
-        $this->fail();
+        $this->result->failRequirement($e->getMessage());
     }
 
     /**
@@ -142,7 +81,7 @@ class PHPUnitObjectiveResult implements \PHPUnit_Framework_TestListener, Objecti
      */
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
-        $this->fail();
+        $this->result->failRequirement($e->getMessage());
     }
 
     /**
@@ -155,7 +94,7 @@ class PHPUnitObjectiveResult implements \PHPUnit_Framework_TestListener, Objecti
      */
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
-        $this->fail();
+        $this->result->failRequirement($e->getMessage());
     }
 
     /**

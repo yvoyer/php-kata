@@ -14,6 +14,6 @@ namespace Star\Kata\Exception;
  *
  * @package Star\Kata\Exception
  */
-class ServiceNotFoundException extends \Exception implements Exception
+class ServiceNotFoundException extends \Exception implements KataException
 {
 }

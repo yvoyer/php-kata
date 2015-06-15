@@ -7,7 +7,7 @@
 
 namespace Star\Kata\Data\Fibonacci;
 
-use Star\Kata\Generator\ClassGenerator;
+use Star\Kata\Exception\DirtyEnvironmentException;
 use Star\Kata\KataRunner;
 use Star\Kata\Model\Environment;
 use Star\Kata\Model\Kata;
@@ -47,10 +47,16 @@ final class FibonacciKata implements Kata
      *
      * @param Environment $environment
      *
+     * @throws \Star\Kata\Exception\DirtyEnvironmentException
      * @return StartedKata
      */
     public function start(Environment $environment)
     {
+        if (false === $environment->isClean()) {
+            throw DirtyEnvironmentException::getEnvironmentIsDirtyException();
+        }
+        $environment->generateClass('Fibonacci');
+
         return new StartedKata($this, $this->createObjective());
     }
 

@@ -8,14 +8,14 @@
 namespace Star\Kata\Exception;
 
 /**
- * Class Exception
+ * Class KataException
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Exception
+ * @package Star\Kata\KataException
  *
  * Base exception for the package.
  */
-interface Exception
+interface KataException
 {
 }

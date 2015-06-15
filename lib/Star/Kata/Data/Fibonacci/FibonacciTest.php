@@ -2,6 +2,7 @@
 
 namespace Star\Kata\Data\Fibonacci;
 
+use Fibonacci;
 use Star\Kata\Model\Objective\PHPUnit\ObjectiveTestCase;
 
 final class FibonacciTest extends ObjectiveTestCase
@@ -16,7 +17,7 @@ final class FibonacciTest extends ObjectiveTestCase
 
     public function testTheFibonacciClassShouldExists()
     {
-        \PHPUnit_Framework_Assert::assertTrue(class_exists('\Fibonacci'));
+        \PHPUnit_Framework_Assert::assertTrue(class_exists('Fibonacci'));
 
         return new Fibonacci();
     }
@@ -27,10 +28,12 @@ final class FibonacciTest extends ObjectiveTestCase
     public function testTheMethodShouldExists(Fibonacci $sequence)
     {
         \PHPUnit_Framework_Assert::assertTrue(method_exists($sequence, 'getNumber'));
+
+        return $sequence;
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testFirstNumberShouldBeZero(Fibonacci $sequence)
     {
@@ -38,7 +41,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testSecondNumberShouldBeOne(Fibonacci $sequence)
     {
@@ -46,7 +49,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testThirdNumberShouldBeOne(Fibonacci $sequence)
     {
@@ -54,7 +57,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testFourthNumberShouldBeTwo(Fibonacci $sequence)
     {
@@ -62,7 +65,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testFifthNumberShouldBeThree(Fibonacci $sequence)
     {
@@ -70,7 +73,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testSixthNumberShouldBeFive(Fibonacci $sequence)
     {
@@ -78,7 +81,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testSeventhNumberShouldBeEight(Fibonacci $sequence)
     {
@@ -86,7 +89,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testTwelveNumberShouldBeEightyNine(Fibonacci $sequence)
     {
@@ -94,7 +97,7 @@ final class FibonacciTest extends ObjectiveTestCase
     }
 
     /**
-     * @depends testTheFibonacciClassShouldExists
+     * @depends testTheMethodShouldExists
      */
     public function testHighNumberShouldBePerformant(Fibonacci $sequence)
     {

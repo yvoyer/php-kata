@@ -9,6 +9,7 @@ namespace Star\Kata\PHPUnit;
 
 use Star\Kata\Model\Objective\Objective;
 use Star\Kata\Model\Objective\ObjectiveResult;
+use Star\Kata\Model\Objective\PHPUnit\PHPUnitResultAdapter;
 
 /**
  * Class KataTestRunner
@@ -20,18 +21,18 @@ use Star\Kata\Model\Objective\ObjectiveResult;
 final class KataTestRunner extends \PHPUnit_TextUI_TestRunner
 {
     /**
-     * @var \PHPUnit_Framework_TestListener
+     * @var ObjectiveResult
      */
-    private $listener;
+    private $result;
 
     /**
-     * @param \PHPUnit_Framework_TestListener $listener
+     * @param ObjectiveResult $result
      */
-    public function __construct(\PHPUnit_Framework_TestListener $listener)
+    public function __construct(ObjectiveResult $result)
     {
         parent::__construct();
 
-        $this->listener = $listener;
+        $this->result = $result;
     }
 
     /**
@@ -40,7 +41,8 @@ final class KataTestRunner extends \PHPUnit_TextUI_TestRunner
     protected function createTestResult()
     {
         $result = new \PHPUnit_Framework_TestResult();
-        $result->addListener($this->listener);
+        $result->addListener(new PHPUnitResultAdapter($this->result));
+        $result->addListener(new \PHPUnit_Util_TestDox_ResultPrinter_Text());
 
         return $result;
     }
@@ -54,6 +56,7 @@ final class KataTestRunner extends \PHPUnit_TextUI_TestRunner
         $suite = new \PHPUnit_Framework_TestSuite(get_class($objective));
 
         $result = $objective->createResult();
+
         $runner = new self($result);
         $runner->setPrinter(new NullPrinter());
         $runner->doRun($suite, array());

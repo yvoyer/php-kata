@@ -38,6 +38,8 @@ interface Kata
      * @param Environment $environment
      *
      * @return StartedKata
+     *
+     * todo Remove Environment from start.
      */
     public function start(Environment $environment);
 

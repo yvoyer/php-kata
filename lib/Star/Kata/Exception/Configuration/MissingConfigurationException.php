@@ -7,16 +7,16 @@
 
 namespace Star\Kata\Exception\Configuration;
 
-use Star\Kata\Exception\Exception;
+use Star\Kata\Exception\KataException;
 
 /**
  * Class MissingConfigurationException
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Exception\Configuration
+ * @package Star\Kata\KataException\Configuration
  */
-class MissingConfigurationException extends \Exception implements Exception
+class MissingConfigurationException extends \Exception implements KataException
 {
     /**
      * @return MissingConfigurationException

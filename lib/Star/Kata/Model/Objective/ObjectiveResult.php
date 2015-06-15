@@ -40,4 +40,9 @@ interface ObjectiveResult
      * @return Objective
      */
     public function objective();
+
+    /**
+     * @param string $requirement
+     */
+    public function failRequirement($requirement);
 }

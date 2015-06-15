@@ -14,6 +14,6 @@ namespace Star\Kata\Exception;
  *
  * @package Star\Kata\Exception
  */
-class AlreadyRegisteredServiceException extends \Exception implements Exception
+class AlreadyRegisteredServiceException extends \Exception implements KataException
 {
 }

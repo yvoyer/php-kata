@@ -14,6 +14,6 @@ namespace Star\Kata\Exception;
  *
  * @package Star\Kata\Exception
  */
-class RuntimeException extends \Exception implements Exception
+class RuntimeException extends \Exception implements KataException
 {
 }

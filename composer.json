@@ -3,11 +3,19 @@
     "description": "Programming Kata for PHP",
     "autoload": {
         "psr-0": {
-            "": ["lib", "tests", "src", ""]
+            "": ["lib", ""]
+        },
+        "psr-4": {
+            "": ["src"]
         },
         "files": [
             "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "": ["tests"]
+        }
     },
     "require": {
         "php": ">=5.3.3",
