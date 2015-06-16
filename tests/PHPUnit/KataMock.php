@@ -5,14 +5,14 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace tests\PHPUnit;
+namespace Star\Kata;
 
 /**
  * Class KataMock
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package tests\PHPUnit
+ * @package Star\Kata
  */
 trait KataMock
 {
@@ -21,7 +21,7 @@ trait KataMock
      */
     protected function getMockEnvironment()
     {
-        return $this->getMock('Star\Kata\Model\Environment');
+        return $this->getMock('Star\Kata\Domain\Environment');
     }
 
     /**
@@ -29,7 +29,7 @@ trait KataMock
      */
     protected function getMockKata()
     {
-        return $this->getMock('Star\Kata\Model\Kata');
+        return $this->getMock('Star\Kata\Domain\Kata');
     }
 
     /**
@@ -37,7 +37,15 @@ trait KataMock
      */
     protected function getMockKataRepository()
     {
-        return $this->getMock('Star\Kata\Model\KataRepository');
+        return $this->getMock('Star\Kata\Domain\KataRepository');
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getMockKataRunner()
+    {
+        return $this->getMock('Star\Kata\Domain\KataRunner');
     }
 
     /**
@@ -45,6 +53,6 @@ trait KataMock
      */
     protected function getMockObjective()
     {
-        return $this->getMock('Star\Kata\Model\Objective\Objective');
+        return $this->getMock('Star\Kata\Domain\Objective\Objective');
     }
 }

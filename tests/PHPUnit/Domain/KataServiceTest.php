@@ -5,17 +5,16 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace tests\PHPUnit\Domain;
+namespace Star\Kata\Domain;
 
-use Star\Kata\KataDomain\KataService;
-use tests\PHPUnit\KataMock;
+use Star\Kata\KataMock;
 
 /**
  * Class KataServiceTest
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package tests\PHPUnit\Domain
+ * @package Star\Kata\Domain
  */
 final class KataServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,11 +46,11 @@ final class KataServiceTest extends \PHPUnit_Framework_TestCase
         $this->environment = $this->getMockEnvironment();
         $this->repository = $this->getMockKataRepository();
 
-        $this->service = new KataService($this->repository, $this->environment);
+        $this->service = new KataService($this->repository, $this->environment, $this->getMockKataRunner());
     }
 
     /**
-     * @expectedException        \Star\Kata\Exception\InvalidArgumentException
+     * @expectedException        \Star\Kata\Domain\Exception\InvalidArgumentException
      * @expectedExceptionMessage The kata name is invalid.
      */
     public function test_starting_a_kata_with_empty_name_should_throw_exception()
@@ -60,7 +59,7 @@ final class KataServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        \Star\Kata\Exception\InvalidArgumentException
+     * @expectedException        \Star\Kata\Domain\Exception\InvalidArgumentException
      * @expectedExceptionMessage The kata name is invalid.
      */
     public function test_evaluating_a_kata_with_empty_name_should_throw_exception()
@@ -69,7 +68,7 @@ final class KataServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        \Star\Kata\Exception\EntityNotFoundException
+     * @expectedException        \Star\Kata\Domain\Exception\EntityNotFoundException
      * @expectedExceptionMessage The 'invalid' kata was not found.
      */
     public function test_starting_a_not_found_kata_should_throw_exception()
@@ -78,7 +77,7 @@ final class KataServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        \Star\Kata\Exception\EntityNotFoundException
+     * @expectedException        \Star\Kata\Domain\Exception\EntityNotFoundException
      * @expectedExceptionMessage The 'invalid' kata was not found.
      */
     public function test_evaluating_a_kata_hot_found_should_throw_exception()
