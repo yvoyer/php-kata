@@ -2,20 +2,15 @@
 
 namespace Star;
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Behat\Context\ContextInterface;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
-
+use Behat\Behat\Context\BehatContext;
+use Behat\Gherkin\Node\PyStringNode;
 use PHPUnit_Framework_Assert as Assert;
 use Star\Kata\Infrastructure\Filesystem\FilesystemEnvironment;
-use Star\Kata\KataApplication;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\Output;
+use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * Features context.
@@ -28,12 +23,7 @@ class KataContext extends BehatContext
     private $environment;
 
     /**
-     * @var KataApplication
-     */
-    private $application;
-
-    /**
-     * @var BufferedOutput
+     * @var Output
      */
     private $output;
 
@@ -51,10 +41,8 @@ class KataContext extends BehatContext
     public function __construct(array $parameters)
     {
         $this->output = new BufferedOutput();
-        $this->basePath = __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
+        $this->basePath = __DIR__ . DIRECTORY_SEPARATOR . '/../tmp';
         $this->environment = new FilesystemEnvironment($this->basePath);
-
-        $this->application = new ApplicationTester($this->environment);
     }
 
     /**
@@ -119,19 +107,28 @@ class KataContext extends BehatContext
 
     private function runCommand($command, array $args, $silenceOutput = false)
     {
-        $input = new ArrayInput(
-            array_merge(
-                array(
-                    'command' => $command,
-                ),
-                $args
-            )
-        );
-        $this->application->setAutoExit(false);
-        $output = $this->output;
-        if ($silenceOutput) {
-            $output = new NullOutput();
+        $phpBinary = new PhpExecutableFinder();
+
+        $processBuilder = new ProcessBuilder([
+            'phpkata.php',
+            $command
+        ] + $args);
+        $processBuilder->setWorkingDirectory(__DIR__ . '/../');
+        $processBuilder->setPrefix($phpBinary->find());
+
+        $process = $processBuilder->getProcess();
+
+        $output = null;
+        if (!$silenceOutput) {
+            $output = function ($type, $buffer) {
+                $this->output->write($buffer);
+            };
         }
-        $this->application->run($input, $output);
+
+        $process->run($output);
+
+        if (!$silenceOutput && !$process->isSuccessful()) {
+            $this->output->write($process->getErrorOutput());
+        }
     }
 }

@@ -32,6 +32,11 @@ Feature:
     When I evaluate the kata 'assert-true'
     Then I should see
     """
+    Star\Fixture\AssertTrue\AssertTrueObjective
+     [x] test class should exists
+     [x] test method should exists
+     [x] test it should always return true
+
     Objective: Always return true
     You finished all the objectives, 3 points awarded.
 
@@ -53,6 +58,11 @@ Feature:
     When I evaluate the kata 'assert-true'
     Then I should see
     """
+    Star\Fixture\AssertTrue\AssertTrueObjective
+     [x] test class should exists
+     [x] test method should exists
+     [ ] test it should always return true
+
     Objective: Always return true
     You failed 2/3 objectives, 2 points awarded. Keep trying.
 
