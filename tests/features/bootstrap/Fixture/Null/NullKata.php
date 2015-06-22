@@ -9,7 +9,7 @@ namespace Star\Fixture\Null;
 
 use Star\Kata\Domain\Environment;
 use Star\Kata\Domain\Kata;
-use Star\Kata\Domain\KataRunner;
+use Star\Kata\Domain\Runner\KataRunner;
 use Star\Kata\Domain\Objective\NullResult;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;

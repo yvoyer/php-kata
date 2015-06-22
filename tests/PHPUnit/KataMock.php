@@ -45,7 +45,7 @@ trait KataMock
      */
     protected function getMockKataRunner()
     {
-        return $this->getMock('Star\Kata\Domain\KataRunner');
+        return $this->getMock('Star\Kata\Domain\Runner\KataRunner');
     }
 
     /**
@@ -54,5 +54,13 @@ trait KataMock
     protected function getMockObjective()
     {
         return $this->getMock('Star\Kata\Domain\Objective\Objective');
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getMockObjectiveResult()
+    {
+        return $this->getMock('Star\Kata\Domain\Objective\ObjectiveResult');
     }
 }

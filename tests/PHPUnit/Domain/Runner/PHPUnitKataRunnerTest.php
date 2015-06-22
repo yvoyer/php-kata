@@ -5,7 +5,7 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Infrastructure\PHPUnit;
+namespace Star\Kata\Domain\Runner;
 
 use Star\Fixture\Null\NullKata;
 use Star\Kata\KataMock;
@@ -15,7 +15,7 @@ use Star\Kata\KataMock;
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Infrastructure\PHPUnit
+ * @package Star\Kata\Domain\Runner
  */
 final class PHPUnitKataRunnerTest extends \PHPUnit_Framework_TestCase
 {

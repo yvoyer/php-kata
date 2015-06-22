@@ -9,6 +9,7 @@ namespace Star\Kata\Domain;
 
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
+use Star\Kata\Domain\Runner\KataRunner;
 
 /**
  * Class Kata

@@ -5,10 +5,9 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Infrastructure\PHPUnit;
+namespace Star\Kata\Domain\Runner;
 
 use Star\Kata\Domain\Kata;
-use Star\Kata\Domain\KataRunner;
 use Star\Kata\Domain\Objective\ObjectiveResult;
 use Star\Kata\Infrastructure\PHPUnit\Runner\PHPUnitTestRunner;
 
@@ -17,7 +16,7 @@ use Star\Kata\Infrastructure\PHPUnit\Runner\PHPUnitTestRunner;
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Infrastructure\PHPUnit
+ * @package Star\Kata\Domain\Runner
  */
 final class PHPUnitKataRunner implements KataRunner
 {

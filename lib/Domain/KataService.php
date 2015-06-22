@@ -10,6 +10,7 @@ namespace Star\Kata\Domain;
 use Star\Kata\Domain\Exception\DirtyEnvironmentException;
 use Star\Kata\Domain\Exception\EntityNotFoundException;
 use Star\Kata\Domain\Exception\InvalidArgumentException;
+use Star\Kata\Domain\Runner\KataRunner;
 
 /**
  * Class KataService

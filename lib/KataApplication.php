@@ -11,8 +11,8 @@ use Star\Kata\Command\ContinueCommand;
 use Star\Kata\Command\StartCommand;
 use Star\Kata\Data\Fibonacci\FibonacciKata;
 use Star\Kata\Domain\Environment;
+use Star\Kata\Domain\Runner\PHPUnitKataRunner;
 use Star\Kata\Infrastructure\InMemory\KataCollection;
-use Star\Kata\Infrastructure\PHPUnit\PHPUnitKataRunner;
 use Star\Kata\Domain\KataService;
 use Symfony\Component\Console\Application;
 

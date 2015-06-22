@@ -5,8 +5,9 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Domain;
+namespace Star\Kata\Domain\Runner;
 
+use Star\Kata\Domain\Kata;
 use Star\Kata\Domain\Objective\ObjectiveResult;
 
 /**
@@ -14,7 +15,7 @@ use Star\Kata\Domain\Objective\ObjectiveResult;
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
- * @package Star\Kata\Domain
+ * @package Star\Kata\Domain\Runner
  */
 interface KataRunner
 {
