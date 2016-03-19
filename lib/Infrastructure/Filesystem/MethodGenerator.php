@@ -17,16 +17,16 @@ namespace Star\Kata\Infrastructure\Filesystem;
 final class MethodGenerator
 {
     /**
-     * @var string
+     * @var SourceFolder
      */
-    private $srcPath;
+    private $folder;
 
     /**
-     * @param string $srcPath
+     * @param SourceFolder $folder
      */
-    public function __construct($srcPath)
+    public function __construct(SourceFolder $folder)
     {
-        $this->srcPath = $srcPath;
+        $this->folder = $folder;
     }
 
     /**
@@ -43,9 +43,7 @@ function $name()
 {
 }
 CODE;
-        $filename = $this->srcPath . DIRECTORY_SEPARATOR . $name . '.php';
-        file_put_contents($filename, $content);
 
-        return $filename;
+        return $this->folder->writeFile($name . '.php', $content);
     }
 }

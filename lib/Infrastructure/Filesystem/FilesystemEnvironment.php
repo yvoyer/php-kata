@@ -35,18 +35,19 @@ final class FilesystemEnvironment implements Environment
     private $filesystem;
 
     /**
-     * @var string
+     * @var SourceFolder
      */
-    private $basePath;
+    private $sourceFolder;
 
     /**
      * @param string $basePath
+     * @param string $srcPath todo Make srcPath configurable
      */
-    public function __construct($basePath)
+    public function __construct($basePath, $srcPath = 'src')
     {
-        $this->basePath = $basePath;
-        $this->classGenerator = new ClassGenerator($basePath);
-        $this->methodGenerator = new MethodGenerator($basePath);
+        $this->sourceFolder = new SourceFolder($basePath . DIRECTORY_SEPARATOR . $srcPath);
+        $this->classGenerator = new ClassGenerator($this->sourceFolder);
+        $this->methodGenerator = new MethodGenerator($this->sourceFolder);
         $this->filesystem = new Filesystem();
     }
 
@@ -74,12 +75,12 @@ final class FilesystemEnvironment implements Environment
      */
     public function isClean()
     {
-        $iterator = new \FilesystemIterator($this->basePath);
+        $iterator = new \FilesystemIterator($this->sourceFolder->url());
         return ! $iterator->valid();
     }
 
     public function clear()
     {
-        $this->filesystem->remove(new \FilesystemIterator($this->basePath));
+        $this->filesystem->remove(new \FilesystemIterator($this->sourceFolder->url()));
     }
 }

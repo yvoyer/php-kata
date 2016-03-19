@@ -17,16 +17,16 @@ namespace Star\Kata\Infrastructure\Filesystem;
 class ClassGenerator
 {
     /**
-     * @var string
+     * @var SourceFolder
      */
-    private $basePath;
+    private $folder;
 
     /**
-     * @param string $srcPath
+     * @param SourceFolder $folder
      */
-    public function __construct($srcPath)
+    public function __construct(SourceFolder $folder)
     {
-        $this->basePath = $srcPath;
+        $this->folder = $folder;
     }
 
     /**
@@ -43,9 +43,6 @@ class $className
 }
 CODE;
 
-        $filename = $this->basePath . DIRECTORY_SEPARATOR . $className . '.php';
-        file_put_contents($filename, $code);
-
-        return $filename;
+        return $this->folder->writeFile($className . '.php', $code);
     }
 }
