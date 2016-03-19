@@ -33,7 +33,7 @@ final class FilesystemEnvironmentTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->root = vfsStream::setup('root');
-        $this->environment = new FilesystemEnvironment($this->root->url());
+        $this->environment = new FilesystemEnvironment($this->root->url(), '');
     }
 
     public function test_it_should_create_a_class()

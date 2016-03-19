@@ -57,7 +57,7 @@ class KataContext extends BehatContext
             mkdir($this->basePath);
         }
 
-        $this->environment = new FilesystemEnvironment($this->basePath);
+        $this->environment = new FilesystemEnvironment(__DIR__, 'testSrc');
         $this->application = new ApplicationTester($this->environment);
     }
 
