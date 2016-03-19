@@ -7,12 +7,12 @@
 
 namespace Star\Kata\Data\Fibonacci;
 
+use Star\Kata\Domain\DTO\StartedKata;
 use Star\Kata\Domain\Environment;
 use Star\Kata\Domain\Kata;
 use Star\Kata\Domain\KataRunner;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
-use Star\Kata\Domain\StartedKata;
 
 /**
  * Class FibonacciKata
@@ -21,7 +21,7 @@ use Star\Kata\Domain\StartedKata;
  *
  * @package Star\Kata\Data\Fibonacci
  */
-final class FibonacciKata implements Kata
+final class FibonacciKata extends Kata
 {
     /**
      * @return Objective
@@ -48,7 +48,7 @@ final class FibonacciKata implements Kata
      *
      * @return StartedKata
      */
-    public function start(Environment $environment)
+    protected function setup(Environment $environment)
     {
         $environment->generateClass('Fibonacci');
 

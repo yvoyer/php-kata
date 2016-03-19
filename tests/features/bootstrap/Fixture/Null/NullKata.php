@@ -13,7 +13,7 @@ use Star\Kata\Domain\KataRunner;
 use Star\Kata\Domain\Objective\NullResult;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
-use Star\Kata\Domain\StartedKata;
+use Star\Kata\Domain\DTO\StartedKata;
 
 /**
  * Class NullKata
@@ -22,7 +22,7 @@ use Star\Kata\Domain\StartedKata;
  *
  * @package Star\Fixture\Null
  */
-final class NullKata implements Kata
+final class NullKata extends Kata
 {
     /**
      * @return Objective
@@ -48,10 +48,8 @@ final class NullKata implements Kata
      * @param Environment $environment
      *
      * @return StartedKata
-     *
-     * todo Remove Environment from start.
      */
-    public function start(Environment $environment)
+    protected function setup(Environment $environment)
     {
         return new StartedKata($this, $this->createObjective());
     }

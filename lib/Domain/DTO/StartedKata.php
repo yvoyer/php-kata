@@ -5,21 +5,16 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Domain;
+namespace Star\Kata\Domain\DTO;
 
+use Star\Kata\Domain\Kata;
 use Star\Kata\Domain\Objective\Objective;
 
 /**
- * Class StartedKata
- *
  * @author  Yannick Voyer (http://github.com/yvoyer)
- *
- * @package Star\Kata\Domain
  */
-final class StartedKata
+class StartedKata
 {
-    const CLASS_NAME = __CLASS__;
-
     /**
      * @var Kata
      */

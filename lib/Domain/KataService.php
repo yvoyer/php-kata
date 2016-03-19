@@ -7,7 +7,8 @@
 
 namespace Star\Kata\Domain;
 
-use Star\Kata\Domain\Exception\DirtyEnvironmentException;
+use Star\Kata\Domain\DTO\StartedKata;
+use Star\Kata\Domain\Exception\EnvironmentException;
 use Star\Kata\Domain\Exception\EntityNotFoundException;
 use Star\Kata\Domain\Exception\InvalidArgumentException;
 
@@ -20,8 +21,6 @@ use Star\Kata\Domain\Exception\InvalidArgumentException;
  */
 final class KataService
 {
-    const CLASS_NAME = __CLASS__;
-
     /**
      * @var KataRepository
      */
@@ -52,8 +51,8 @@ final class KataService
     /**
      * @param $kataName
      *
-     * @throws \Star\Kata\Domain\Exception\DirtyEnvironmentException
-     * @return \Star\Kata\Domain\StartedKata
+     * @throws \Star\Kata\Domain\Exception\EnvironmentException
+     * @return StartedKata
      */
     public function startKata($kataName)
     {
@@ -63,11 +62,18 @@ final class KataService
         $this->guardAgainstNotFoundKata($kataName, $kata);
 
         if (false === $this->environment->isClean()) {
-            throw DirtyEnvironmentException::getEnvironmentIsDirtyException();
+            throw EnvironmentException::environmentIsDirty();
         }
 
-        // todo add KataWasStartedEvent to print objectives?
         return $kata->start($this->environment);
+    }
+
+    /**
+     * @return Kata
+     */
+    public function getCurrentKata()
+    {
+        return $this->katas->findOneByName($this->environment->currentKata());
     }
 
     /**
@@ -83,8 +89,7 @@ final class KataService
         $kata = $this->katas->findOneByName($kataName);
         $this->guardAgainstNotFoundKata($kataName, $kata);
 
-        // todo add KataWasEvaluatedEvent to print result?
-        return $kata->evaluate($this->runner);
+        return $kata->end($this->runner, $this->environment);
     }
 
     /**
@@ -95,7 +100,7 @@ final class KataService
     private function guardAgainstNotFoundKata($kataName, $kata)
     {
         if (null === $kata) {
-            throw new EntityNotFoundException("The '{$kataName}' kata was not found.");
+            throw EntityNotFoundException::kataWithNameNotFound($kataName);
         }
     }
 

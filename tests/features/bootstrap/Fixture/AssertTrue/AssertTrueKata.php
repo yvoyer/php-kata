@@ -12,7 +12,7 @@ use Star\Kata\Domain\Kata;
 use Star\Kata\Domain\KataRunner;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
-use Star\Kata\Domain\StartedKata;
+use Star\Kata\Domain\DTO\StartedKata;
 
 /**
  * Class AssertTrueKata
@@ -21,7 +21,7 @@ use Star\Kata\Domain\StartedKata;
  *
  * @package Star\Fixture\AssertTrue
  */
-final class AssertTrueKata implements Kata
+final class AssertTrueKata extends Kata
 {
     /**
      * @return Objective
@@ -48,7 +48,7 @@ final class AssertTrueKata implements Kata
      *
      * @return StartedKata
      */
-    public function start(Environment $environment)
+    protected function setup(Environment $environment)
     {
         $environment->generateClass('AssertTrue');
 

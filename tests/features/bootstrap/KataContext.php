@@ -11,6 +11,7 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use PHPUnit_Framework_Assert as Assert;
+use Star\Kata\Domain\Exception\CurrentKataException;
 use Star\Kata\Infrastructure\Filesystem\FilesystemEnvironment;
 use Star\Kata\KataApplication;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -84,6 +85,7 @@ class KataContext extends BehatContext
     public function iStartTheKata($kataName)
     {
         $this->runCommand('start', array('kata' => $kataName));
+        Assert::assertTrue(file_exists($this->basePath . DIRECTORY_SEPARATOR . '.current_kata'));
     }
 
     /**
@@ -100,6 +102,7 @@ class KataContext extends BehatContext
     public function theCodeKataIsStarted($kataName)
     {
         $this->runCommand('start', array('kata' => $kataName), true);
+        Assert::assertTrue(file_exists($this->basePath . DIRECTORY_SEPARATOR . '.current_kata'));
     }
 
     /**
@@ -120,6 +123,27 @@ class KataContext extends BehatContext
         $this->runCommand('continue', array('kata' => $kataName));
     }
 
+    /**
+     * @When /^The current kata should be defined as \'([^\']*)\'$/
+     */
+    public function theCurrentKataShouldBeDefinedAs($kataName)
+    {
+        Assert::assertSame($kataName, $this->environment->currentKata());
+    }
+
+    /**
+     * @When /^The current kata data should be removed\.$/
+     */
+    public function theCurrentKataDataShouldBeRemoved()
+    {
+        try {
+            $this->environment->currentKata();
+            Assert::fail('Current kata should not be defined');
+        } catch (CurrentKataException $e) {
+            // do nothing
+        }
+    }
+
     private function runCommand($command, array $args, $silenceOutput = false)
     {
         $input = new ArrayInput(
@@ -135,6 +159,6 @@ class KataContext extends BehatContext
         if ($silenceOutput) {
             $output = new NullOutput();
         }
-        $this->application->run($input, $output);
+        Assert::assertSame(0, $this->application->run($input, $output), 'An error occured in the command execution');
     }
 }
