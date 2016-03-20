@@ -9,6 +9,7 @@ namespace Star\Kata\Infrastructure\Filesystem;
 
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\vfsStreamFile;
 
 final class SourceFolderTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,5 +46,17 @@ final class SourceFolderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('vfs://root/file.txt', $filename);
         $this->assertTrue($this->root->hasChild('file.txt'));
         $this->assertSame('content', file_get_contents($filename));
+    }
+
+    public function test_it_should_read_the_file()
+    {
+        $this->assertFalse($this->root->hasChild('file'));
+        $this->assertSame('', $this->sourceFolder->readFile('file'), 'Return empty when file not found');
+
+        $file = new vfsStreamFile('file');
+        $file->setContent('content');
+        $this->root->addChild($file);
+        $this->assertTrue($this->root->hasChild('file'));
+        $this->assertSame('content', $this->sourceFolder->readFile('file'), 'Returns content when file found');
     }
 }

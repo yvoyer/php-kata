@@ -12,7 +12,7 @@ use Star\Kata\Domain\Kata;
 use Star\Kata\Domain\KataRunner;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
-use Star\Kata\Domain\StartedKata;
+use Star\Kata\Domain\DTO\StartedKata;
 
 /**
  * Class AssertFalseKata
@@ -21,7 +21,7 @@ use Star\Kata\Domain\StartedKata;
  *
  * @package Star\Fixture\UserInputInvalidCode
  */
-final class AssertFalseKata implements Kata
+final class AssertFalseKata extends Kata
 {
     /**
      * @return Objective
@@ -47,10 +47,8 @@ final class AssertFalseKata implements Kata
      * @param Environment $environment
      *
      * @return StartedKata
-     *
-     * todo Remove Environment from start.
      */
-    public function start(Environment $environment)
+    protected function setup(Environment $environment)
     {
         $environment->generateClass('AssertFalse');
 

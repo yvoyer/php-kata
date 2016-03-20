@@ -8,6 +8,7 @@
 namespace Star\Kata\Infrastructure\Filesystem;
 
 use Star\Kata\Infrastructure\Filesystem\Exception\SourceFolderException;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class SourceFolder
 {
@@ -30,21 +31,56 @@ final class SourceFolder
     }
 
     /**
-     * @param string $filename
-     * @param string $code
+     * @param string $filename The path of the file, relative to root.
+     * @param string $content
      *
      * @return string The full path to the file
      */
-    public function writeFile($filename, $code)
+    public function writeFile($filename, $content)
     {
-        $filename = $this->folder . DIRECTORY_SEPARATOR . $filename;
-        file_put_contents($filename, $code);
+        $filename = $this->filePath($filename);
+        file_put_contents($filename, $content);
 
         return $filename;
     }
 
     /**
+     * @param string $filename The path of the file, relative to root.
+     *
+     * @return string The content of the file
+     */
+    public function readFile($filename)
+    {
+        $filePath = $this->filePath($filename);
+        if (! file_exists($filePath)) {
+            return '';
+        }
+
+        return file_get_contents($filePath);
+    }
+
+    /**
+     * @param string $filename The path of the file, relative to root.
+     *
      * @return string
+     */
+    public function filePath($filename)
+    {
+        // todo add guard against going lower than root.
+        return $this->folder . DIRECTORY_SEPARATOR . $filename;
+    }
+
+    /**
+     * @param string $filename The path of the file, relative to root.
+     */
+    public function removeFile($filename)
+    {
+        $filesystem = new Filesystem();
+        $filesystem->remove($this->filePath($filename));
+    }
+
+    /**
+     * @return string The path to root
      */
     public function url()
     {

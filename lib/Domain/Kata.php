@@ -7,6 +7,9 @@
 
 namespace Star\Kata\Domain;
 
+use Star\Kata\Domain\DTO\StartedKata;
+use Star\Kata\Domain\Event\KataHasEnded;
+use Star\Kata\Domain\Event\KataWasStarted;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
 
@@ -17,19 +20,42 @@ use Star\Kata\Domain\Objective\ObjectiveResult;
  *
  * @package Star\Kata\Domain
  */
-interface Kata
+abstract class Kata
 {
     /**
      * @return Objective
      */
-    public function createObjective();
+    public abstract function createObjective();
 
     /**
      * @param KataRunner $runner
      *
      * @return ObjectiveResult
      */
-    public function evaluate(KataRunner $runner);
+    protected abstract function evaluate(KataRunner $runner);
+
+    /**
+     * @param KataRunner $runner
+     * @param Environment $environment
+     *
+     * @return ObjectiveResult
+     */
+    public function end(KataRunner $runner, Environment $environment)
+    {
+        $result = $this->evaluate($runner);
+        $environment->publish(new KataHasEnded($this->name()));
+
+        return $result;
+    }
+
+    /**
+     * Define pre-conditions to use kata.
+     *
+     * @param Environment $environment
+     *
+     * @return StartedKata
+     */
+    protected abstract function setup(Environment $environment);
 
     /**
      * Define pre-conditions to use kata.
@@ -40,10 +66,16 @@ interface Kata
      *
      * todo Remove Environment from start.
      */
-    public function start(Environment $environment);
+    public function start(Environment $environment)
+    {
+        $startedKata = $this->setup($environment);
+        $environment->publish(new KataWasStarted($startedKata));
+
+        return $startedKata;
+    }
 
     /**
      * @return string
      */
-    public function name();
+    public abstract function name();
 }

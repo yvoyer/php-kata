@@ -40,9 +40,16 @@ final class KataServiceTest extends \PHPUnit_Framework_TestCase
      */
     private $kata;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $startedKata;
+
     public function setUp()
     {
         $this->kata = $this->getMockKata();
+        $this->startedKata = $this->getMockStartedKata();
+
         $this->environment = $this->getMockEnvironment();
         $this->repository = $this->getMockKataRepository();
 
@@ -87,31 +94,46 @@ final class KataServiceTest extends \PHPUnit_Framework_TestCase
 
     public function test_it_should_start_the_kata()
     {
-        $this->repository
-            ->expects($this->once())
-            ->method('findOneByName')
-            ->willReturn($this->kata);
+        $this->assertKataWasFound();
+        $this->assertKataIsStarted();
 
-        $this->kata
-            ->expects($this->once())
-            ->method('start')
-            ->willReturn('return');
-
-        $this->assertSame('return', $this->service->startKata('name'));
+        $this->assertSame($this->startedKata, $this->service->startKata('name'));
     }
 
     public function test_it_should_evaluate_the_kata()
+    {
+        $this->assertKataWasFound();
+        $this->kata
+            ->expects($this->once())
+            ->method('end')
+            ->willReturn('return');
+
+        $this->assertSame('return', $this->service->evaluate('name'));
+    }
+
+    public function test_it_should_return_the_current_kata()
+    {
+        $this->environment
+            ->method('currentKata')
+            ->willReturn('name');
+        $this->assertKataWasFound();
+
+        $this->assertSame($this->kata, $this->service->getCurrentKata());
+    }
+
+    private function assertKataWasFound()
     {
         $this->repository
             ->expects($this->once())
             ->method('findOneByName')
             ->willReturn($this->kata);
+    }
 
+    private function assertKataIsStarted()
+    {
         $this->kata
             ->expects($this->once())
-            ->method('evaluate')
-            ->willReturn('return');
-
-        $this->assertSame('return', $this->service->evaluate('name'));
+            ->method('start')
+            ->willReturn($this->startedKata);
     }
 }

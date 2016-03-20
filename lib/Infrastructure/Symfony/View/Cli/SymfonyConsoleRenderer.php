@@ -5,11 +5,12 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Domain\View\Cli;
+namespace Star\Kata\Infrastructure\Symfony\View\Cli;
 
+use Star\Kata\Domain\DTO\StartedKata;
+use Star\Kata\Domain\Exception\KataException;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
-use Star\Kata\Domain\StartedKata;
 use Star\Kata\Domain\View\ResultRenderer;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -60,9 +61,9 @@ final class SymfonyConsoleRenderer implements ResultRenderer
     }
 
     /**
-     * @param \Exception $exception
+     * @param KataException $exception
      */
-    public function displayError(\Exception $exception)
+    public function displayError(KataException $exception)
     {
         $this->output->writeln('<error>' . $exception->getMessage() . '</error>');
     }

@@ -11,9 +11,11 @@ use Star\Kata\Command\ContinueCommand;
 use Star\Kata\Command\StartCommand;
 use Star\Kata\Data\Fibonacci\FibonacciKata;
 use Star\Kata\Domain\Environment;
+use Star\Kata\Domain\Extension\Core\CoreExtension;
+use Star\Kata\Domain\KataService;
 use Star\Kata\Infrastructure\InMemory\KataCollection;
 use Star\Kata\Infrastructure\PHPUnit\PHPUnitKataRunner;
-use Star\Kata\Domain\KataService;
+use Star\Kata\Infrastructure\Symfony\Event\SymfonyDispatcherPublisher;
 use Symfony\Component\Console\Application;
 
 /**
@@ -34,8 +36,11 @@ class KataApplication extends Application
     {
         parent::__construct('phpkata', self::VERSION);
 
-        $collection = $this->getDefaultKatas();
+        // todo Pass config instead ie. $config['publisher'] = 'symfony';
+        $environment->setPublisher(new SymfonyDispatcherPublisher());
+        $environment->registerExtension(new CoreExtension());
 
+        $collection = $this->getDefaultKatas();
         $service = new KataService($collection, $environment, new PHPUnitKataRunner());
 
         $this->add(new StartCommand($service));

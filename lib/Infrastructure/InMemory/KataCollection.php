@@ -20,8 +20,6 @@ use Star\Kata\Domain\KataRepository;
  */
 class KataCollection implements KataRepository
 {
-    const CLASS_NAME = __CLASS__;
-
     /**
      * @var TypedCollection|Kata[]
      */

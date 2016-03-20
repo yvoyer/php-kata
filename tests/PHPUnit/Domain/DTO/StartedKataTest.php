@@ -5,7 +5,7 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
-namespace Star\Kata\Domain;
+namespace Star\Kata\Domain\DTO;
 
 use Star\Kata\KataMock;
 

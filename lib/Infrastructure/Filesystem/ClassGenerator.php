@@ -5,6 +5,7 @@
  * (c) Yannick Voyer (http://github.com/yvoyer)
  */
 
+// todo Move all namespace to domain
 namespace Star\Kata\Infrastructure\Filesystem;
 
 /**

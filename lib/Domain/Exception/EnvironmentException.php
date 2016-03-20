@@ -8,19 +8,27 @@
 namespace Star\Kata\Domain\Exception;
 
 /**
- * Class DirtyEnvironmentException
+ * Class EnvironmentException
  *
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star\Kata\Domain\Exception
  */
-final class DirtyEnvironmentException extends \Exception implements KataException
+final class EnvironmentException extends \Exception implements KataException
 {
     /**
-     * @return DirtyEnvironmentException
+     * @return EnvironmentException
      */
-    public static function getEnvironmentIsDirtyException()
+    public static function environmentIsDirty()
     {
         return new self('The environment seems to contain old data. Run the reset command to clean it up.');
+    }
+
+    /**
+     * @return EnvironmentException
+     */
+    public static function environmentNotLoaded()
+    {
+        return new self('The environment is not loaded.');
     }
 }

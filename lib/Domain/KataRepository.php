@@ -16,9 +16,6 @@ namespace Star\Kata\Domain;
  */
 interface KataRepository
 {
-    // todo remove
-    const INTERFACE_NAME = __CLASS__;
-
     /**
      * @param string $name
      *

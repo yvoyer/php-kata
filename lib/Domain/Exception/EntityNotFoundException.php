@@ -16,4 +16,13 @@ namespace Star\Kata\Domain\Exception;
  */
 class EntityNotFoundException extends RuntimeException
 {
+    /**
+     * @param string $name
+     *
+     * @return EntityNotFoundException
+     */
+    public static function kataWithNameNotFound($name)
+    {
+        return new self("The '{$name}' kata was not found.");
+    }
 }
