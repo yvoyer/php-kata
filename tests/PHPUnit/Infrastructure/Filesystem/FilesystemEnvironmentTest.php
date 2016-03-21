@@ -10,6 +10,7 @@ namespace Star\Kata\Infrastructure\Filesystem;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
+use Star\Kata\Domain\Environment;
 use Star\Kata\KataMock;
 
 /**
@@ -117,5 +118,12 @@ final class FilesystemEnvironmentTest extends \PHPUnit_Framework_TestCase
     public function test_it_should_throw_exception_when_publishing_on_not_loaded_env()
     {
         $this->environment->publish($this->getMockKataEvent());
+    }
+
+    public function test_it_should_create_source_folder_when_it_do_not_exists()
+    {
+        $this->assertFalse($this->root->hasChild('src'));
+        $this->assertInstanceOf(Environment::class, FilesystemEnvironment::setup($this->root->url()));
+        $this->assertTrue($this->root->hasChild('src'));
     }
 }

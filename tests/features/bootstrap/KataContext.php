@@ -53,12 +53,7 @@ class KataContext extends BehatContext
     {
         $this->output = new BufferedOutput();
         $this->basePath = __DIR__ . DIRECTORY_SEPARATOR . 'testSrc';
-
-        if (false === file_exists($this->basePath)) {
-            mkdir($this->basePath);
-        }
-
-        $this->environment = new FilesystemEnvironment(__DIR__, 'testSrc');
+        $this->environment = FilesystemEnvironment::setup(__DIR__, 'testSrc');
         $this->application = new ApplicationTester($this->environment);
     }
 

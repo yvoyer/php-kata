@@ -166,4 +166,20 @@ final class FilesystemEnvironment implements Environment
             throw EnvironmentException::environmentNotLoaded();
         }
     }
+
+    /**
+     * @param string $basePath
+     * @param string $srcPath
+     *
+     * @return FilesystemEnvironment
+     */
+    public static function setup($basePath, $srcPath = 'src')
+    {
+        $fullPath = $basePath . DIRECTORY_SEPARATOR . $srcPath;
+        if (! file_exists($fullPath)) {
+            mkdir($fullPath);
+        }
+
+        return new self($basePath, $srcPath);
+    }
 }
