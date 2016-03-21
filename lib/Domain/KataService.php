@@ -58,8 +58,7 @@ final class KataService
     {
         $this->guardAgainstInvalidName($kataName);
 
-        $kata = $this->katas->findOneByName($kataName);
-        $this->guardAgainstNotFoundKata($kataName, $kata);
+        $kata = $this->searchKata($kataName);
 
         if (false === $this->environment->isClean()) {
             throw EnvironmentException::environmentIsDirty();
@@ -73,7 +72,7 @@ final class KataService
      */
     public function getCurrentKata()
     {
-        return $this->katas->findOneByName($this->environment->currentKata());
+        return $this->searchKata($this->environment->currentKata());
     }
 
     /**
@@ -85,23 +84,33 @@ final class KataService
     public function evaluate($kataName)
     {
         $this->guardAgainstInvalidName($kataName);
-
-        $kata = $this->katas->findOneByName($kataName);
-        $this->guardAgainstNotFoundKata($kataName, $kata);
+        $kata = $this->searchKata($kataName);
 
         return $kata->end($this->runner, $this->environment);
     }
 
     /**
-     * @param string $kataName
-     * @param $kata
-     * @throws \Star\Kata\Domain\Exception\EntityNotFoundException
+     * @param string $name
+     *
+     * @return Kata
+     * @throws EntityNotFoundException When not found
      */
-    private function guardAgainstNotFoundKata($kataName, $kata)
+    public function searchKata($name)
     {
+        $kata = $this->katas->findOneByName($name);
         if (null === $kata) {
-            throw EntityNotFoundException::kataWithNameNotFound($kataName);
+            throw EntityNotFoundException::kataWithNameNotFound($name);
         }
+
+        return $kata;
+    }
+
+    /**
+     * @return Kata[]
+     */
+    public function getAllRegisteredKatas()
+    {
+        return $this->katas->findAllKatas();
     }
 
     /**

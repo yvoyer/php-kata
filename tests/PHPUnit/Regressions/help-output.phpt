@@ -2,17 +2,23 @@
 Assert that the help output always show the right information
 --FILE--
 <?php
-$_SERVER['argv'][1] = '--help';
+$_SERVER['argv'][1] = 'help';
+
 require __DIR__ . '/../../../phpkata.php';
 ?>
 --EXPECTF--
 #!/usr/bin/env php
-phpkata version 0.1.0
-
 Usage:
- command [options] [arguments]
+ help [--xml] [--format="..."] [--raw] [command_name]
+
+Arguments:
+ command               The command to execute
+ command_name          The command name (default: "help")
 
 Options:
+ --xml                 To output help as XML
+ --format              To output help in other formats (default: "txt")
+ --raw                 To output raw command help
  --help (-h)           Display this help message
  --quiet (-q)          Do not output any message
  --verbose (-v|vv|vvv) Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
@@ -21,9 +27,13 @@ Options:
  --no-ansi             Disable ANSI output
  --no-interaction (-n) Do not ask any interactive question
 
-Available commands:
- continue   End the specified kata.
- help       Displays help for a command
- list       Lists commands
- start      Start the specified kata.
-
+Help:
+ The help command displays help for a given command:
+ 
+   php - help list
+ 
+ You can also output the help in other formats by using the --format option:
+ 
+   php - help --format=xml list
+ 
+ To display the list of available commands, please use the list command.

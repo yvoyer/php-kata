@@ -13,4 +13,4 @@ use Star\Kata\KataApplication;
 use Symfony\Component\Console\Input\ArgvInput;
 
 $application = new KataApplication(FilesystemEnvironment::setup(__DIR__, 'src'));
-$application->run(new ArgvInput($argv));
+$application->run(new ArgvInput());
