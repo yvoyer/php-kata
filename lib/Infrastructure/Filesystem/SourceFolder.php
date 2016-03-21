@@ -27,6 +27,10 @@ final class SourceFolder
             throw SourceFolderException::sourceFolderDoNotExists($folder);
         }
 
+        if (! is_dir($folder)) {
+            throw SourceFolderException::sourceFolderMustBeADirectory($folder);
+        }
+
         $this->folder = $folder;
     }
 

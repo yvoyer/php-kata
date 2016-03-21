@@ -20,4 +20,14 @@ final class SourceFolderException extends \Exception implements KataException
     {
         return new self("The source folder '{$folder}' do not exists.");
     }
+
+    /**
+     * @param string $path
+     *
+     * @return SourceFolderException
+     */
+    public static function sourceFolderMustBeADirectory($path)
+    {
+        return new self("The source folder must be a directory, '{$path}' given.");
+    }
 }

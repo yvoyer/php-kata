@@ -12,6 +12,5 @@ use Star\Kata\Infrastructure\Filesystem\FilesystemEnvironment;
 use Star\Kata\KataApplication;
 use Symfony\Component\Console\Input\ArgvInput;
 
-$environment = new FilesystemEnvironment(__DIR__, 'src');
-$application = new KataApplication($environment);
+$application = new KataApplication(FilesystemEnvironment::setup(__DIR__, 'src'));
 $application->run(new ArgvInput($argv));

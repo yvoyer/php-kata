@@ -59,4 +59,14 @@ final class SourceFolderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->root->hasChild('file'));
         $this->assertSame('content', $this->sourceFolder->readFile('file'), 'Returns content when file found');
     }
+
+    /**
+     * @expectedException        \Star\Kata\Infrastructure\Filesystem\Exception\SourceFolderException
+     * @expectedExceptionMessage The source folder must be a directory, 'vfs://root/file' given.
+     */
+    public function test_it_should_throw_exception_when_source_folder_is_file()
+    {
+        $this->root->addChild(new vfsStreamFile('file'));
+        new SourceFolder($this->root->getChild('file')->url());
+    }
 }
