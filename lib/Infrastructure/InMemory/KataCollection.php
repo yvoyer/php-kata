@@ -71,4 +71,12 @@ class KataCollection implements KataRepository
     {
         return count($this->katas);
     }
+
+    /**
+     * @return Kata[]
+     */
+    public function findAllKatas()
+    {
+        return $this->katas->toArray();
+    }
 }

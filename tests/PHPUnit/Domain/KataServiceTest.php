@@ -121,6 +121,25 @@ final class KataServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->kata, $this->service->getCurrentKata());
     }
 
+    /**
+     * @expectedException        \Star\Kata\Domain\Exception\EntityNotFoundException
+     * @expectedExceptionMessage The 'invalid' kata was not found.
+     */
+    public function test_should_throw_exception_when_getting_searching_for_invalid_name()
+    {
+        $this->service->searchKata('invalid');
+    }
+
+    public function test_it_should_return_all_registered_katas()
+    {
+        $this->repository
+            ->expects($this->once())
+            ->method('findAllKatas')
+            ->willReturn('katas');
+
+        $this->assertSame('katas', $this->service->getAllRegisteredKatas());
+    }
+
     private function assertKataWasFound()
     {
         $this->repository

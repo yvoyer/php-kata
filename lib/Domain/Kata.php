@@ -78,4 +78,12 @@ abstract class Kata
      * @return string
      */
     public abstract function name();
+
+    /**
+     * @return string
+     */
+    public function description()
+    {
+        return $this->createObjective()->description();
+    }
 }

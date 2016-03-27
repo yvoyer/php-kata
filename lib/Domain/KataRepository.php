@@ -22,4 +22,9 @@ interface KataRepository
      * @return null|Kata
      */
     public function findOneByName($name);
+
+    /**
+     * @return Kata[]
+     */
+    public function findAllKatas();
 }
