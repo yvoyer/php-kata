@@ -18,6 +18,8 @@ use Star\Kata\KataApplication;
  * @author  Yannick Voyer (http://github.com/yvoyer)
  *
  * @package Star
+ *
+ * todo Move to extensions
  */
 final class ApplicationTester extends KataApplication
 {

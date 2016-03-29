@@ -7,7 +7,6 @@
 
 namespace Star\Kata\Domain\View;
 
-use Star\Kata\Domain\Exception\KataException;
 use Star\Kata\Domain\Objective\Objective;
 use Star\Kata\Domain\Objective\ObjectiveResult;
 use Star\Kata\Domain\DTO\StartedKata;
@@ -37,9 +36,9 @@ interface ResultRenderer
     public function displayObjective(Objective $objective);
 
     /**
-     * @param KataException $exception
+     * @param \Exception $exception
      */
-    public function displayError(KataException $exception);
+    public function displayError(\Exception $exception);
 
     /**
      * @param StartedKata $kata

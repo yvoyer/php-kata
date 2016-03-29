@@ -61,9 +61,9 @@ final class SymfonyConsoleRenderer implements ResultRenderer
     }
 
     /**
-     * @param KataException $exception
+     * @param \Exception $exception
      */
-    public function displayError(KataException $exception)
+    public function displayError(\Exception $exception)
     {
         $this->output->writeln('<error>' . $exception->getMessage() . '</error>');
     }
