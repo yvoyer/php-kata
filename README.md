@@ -1,6 +1,10 @@
 php-kata
 ========
 
+**WARNING THIS VERSION IS NO MORE SUPPORTED**
+
+**Application was migrated to the organization [phpkata](https://github.com/phpkata)**
+
 [![Build Status](https://travis-ci.org/yvoyer/php-kata.svg?branch=master)](https://travis-ci.org/yvoyer/php-kata)
 
 # Installation
